@@ -169,7 +169,7 @@ select:valid {
         if(selected.includes(d)) selected = selected.filter(x=>x!==d); else selected.push(d);
         document.getElementById('card320').classList.toggle('selected', selected.includes('3/20'));
         document.getElementById('card321').classList.toggle('selected', selected.includes('3/21'));
-        document.getElementById('priceDisplay').innerText = "應繳金額：" + (selected.length * 100) + " 元";
+        document.getElementById('priceDisplay').innerText = "應繳金額 " + (selected.length * 100) + " 元";
         
         const b = document.body; b.className = '';
         if(selected.length==2) b.classList.add('theme-both');
@@ -222,7 +222,7 @@ function showSuccess(d) {
             姓名：${d.name}<br>
             Email：${d.email}<br>
             金額：${d.amount}元<br>
-            直播時間：<span style="color:blue;">${liveTimeStr}</span>
+            直播時間：<br><span style="color:blue;">${liveTimeStr}</span>
         `;
         
         let qr = "";
