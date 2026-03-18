@@ -240,12 +240,14 @@ function copyReminderText() {
 
     // 使用 \n 來達成真正的強迫換行
     // 在「我已報名完成」前面加上 ${currentPayload.name}
-    const textToCopy = `${currentPayload.name} 我已報名完成！${dateText}
+    const textToCopy = `${currentPayload.name} 您已報名完成！${dateText}
 請記得儘速linepay繳費
-會議當天18:45即可開放入場等候審核。
-若等候超過5分鐘都沒有被准入，請退出zoom，再次確認您ZOOM的登入姓名，是否有與報名表單相同。
 
-💎直播間Zoom ID：688 688 1985（密碼 688）`;
+💎直播間Zoom ID：688 688 1985（密碼 688）
+
+會議當天18:45即可開放入場等候審核。
+若等候超過5分鐘都沒有被准入，請退出zoom，再次確認您ZOOM的登入姓名必須要是「${currentPayload.name}」，是否有與報名表單相同。
+`;
 
     const dummy = document.createElement("textarea");
     document.body.appendChild(dummy);
