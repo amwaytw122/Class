@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3/20、3/21線上直播報名</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        /* 修改所有輸入框的預設文字顏色 */
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>3/20、3/21線上直播報名</title>
@@ -8,6 +14,8 @@
 <style>
 /* 修改所有輸入框的預設文字顏色 */
 ::placeholder {
+    color: #ccc;      /* 改成更淺的灰色 (例如 #ccc 或 #ddd) */
+    opacity: 1;       /* 確保在 Firefox 瀏覽器上顏色不會變淡 */
 color: #ccc;      /* 改成更淺的灰色 (例如 #ccc 或 #ddd) */
 opacity: 1;       /* 確保在 Firefox 瀏覽器上顏色不會變淡 */
 }
@@ -18,23 +26,63 @@ opacity: 1;       /* 確保在 Firefox 瀏覽器上顏色不會變淡 */
 :-ms-input-placeholder { color: #ccc; }      /* IE/Edge */
 
 select:invalid, select option[value=""] {
+    color: #ccc;
 color: #ccc;
 }
 
 /* 1. 當選單處於「未選取」狀態時，文字顯示淺灰色 */
 select:invalid {
+    color: #ccc !important;
 color: #ccc !important;
 }
 
 /* 2. 當點開選單後，裡面的選項內容要恢復成黑色 */
 select option {
+    color: #000;
 color: #000;
 }
 
 /* 3. 當已經選了內容後，選單文字要變回黑色 */
 select:valid {
+    color: #000;
 color: #000;
 }
+        
+        :root { --border: #000; --accent: #ff4757; --bg: #f0f0f0; }
+        body { font-family: 'Noto Sans TC', sans-serif; background: var(--bg); display: flex; justify-content: center; padding: 15px; margin: 0; transition: 0.4s; }
+        
+        /* 動態配色 */
+        body.theme-320 { background: #2c3e50; --accent: #f1c40f; }
+        body.theme-321 { background: #e8f5e9; --accent: #2ecc71; }
+        body.theme-both { background: #fff0f3; --accent: #e91e63; }
+
+        h1 { font-size: 1.5rem; text-align: center; border-bottom: 6px solid #000; padding-bottom: 15px; font-weight: 900; margin-top: 0; }
+
+        /* EDM 樣式 */
+        .edm-box { position: relative; border: 5px solid #000; border-radius: 20px; overflow: visible; margin-bottom: 50px; cursor: pointer; transition: 0.2s; background: #eee; }
+        .edm-box img { width: 100%; display: block;border-radius: 15px; }
+        .edm-box.selected { border-color: var(--accent); transform: translateY(5px); }
+        .overlay { position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.8); display:none; flex-direction: column; justify-content:center; align-items:center; color:#fff; }
+        .edm-box.selected .overlay { display: flex; }
+        .check-mark { font-size: 100px; color: #2ecc71; font-weight: 900; }
+        .zoom-btn { position: absolute; bottom: -45px; right: 5px; background: #fff; border: 3px solid #000; border-radius: 12px; padding: 8px; font-weight: bold; z-index: 10; }
+
+        /* 表單風格 */
+        .field { margin-bottom: 20px; }
+        label { display: block; font-weight: 900; margin-bottom: 8px; font-size: 1.1rem; }
+        input, select { width: 100%; padding: 15px; border: 4px solid #000; border-radius: 15px; font-size: 1.1rem; font-weight: bold; box-sizing: border-box; background: #fff; -webkit-appearance: none; }
+        
+        .price-display { background: none; color: #000; text-align: center; padding: 10px; border-radius: 20px; font-size: 2.2rem; font-weight: 900; margin: 10px 0; border: none solid var(--accent); }
+
+        .submit-btn { width: 100%; padding: 25px; background: #ff4757; color: #fff; border: 5px solid #000; border-radius: 20px; font-size: 1.6rem; font-weight: 900; box-shadow: 0 10px 0 #000; cursor: pointer; }
+        .submit-btn:active { transform: translateY(10px); box-shadow: none; }
+        .submit-btn:disabled { background: #999; cursor: not-allowed; }
+
+        /* Modal 成功視窗 */
+        #modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:100; padding:15px; box-sizing:border-box; overflow-y:auto; }
+        .m-card { background:#fff; border:6px solid #000; border-radius:30px; padding:25px; max-width:420px; margin:auto; position:relative; }
+        .m-title { color:red; text-align:center; font-size:24px; font-weight:900; margin:0; }
+    </style>
 
 :root { --border: #000; --accent: #ff4757; --bg: #f0f0f0; }
 body { font-family: 'Noto Sans TC', sans-serif; background: var(--bg); display: flex; justify-content: center; padding: 15px; margin: 0; transition: 0.4s; }
@@ -76,6 +124,57 @@ input, select { width: 100%; padding: 15px; border: 4px solid #000; border-radiu
 <body class="theme-default">
 
 <div class="app-container animate__animated animate__fadeIn">
+    <h1 style="font-size: 2rem;">3/20(五)、3/21(六)<br>ZOOM線上直播報名</h1>
+
+    <!-- 3/20 EDM -->
+    <div id="card320" class="edm-box" onclick="toggleDate('3/20')">
+        <img src="https://drive.google.com/thumbnail?id=1CxuetIaIJ25Ic1gYDMTXTiIDoTZdfLZH&sz=w800">
+        <div class="zoom-btn" onclick="event.stopPropagation(); window.open('https://drive.google.com/file/d/1CxuetIaIJ25Ic1gYDMTXTiIDoTZdfLZH/view')">放大海報🔍</div>
+        <div class="overlay"><div class="check-mark">✓</div><div style="font-size:70px; font-weight:900;">100元</div></div>
+    </div>
+
+    <!-- 3/21 EDM -->
+    <div id="card321" class="edm-box" onclick="toggleDate('3/21')">
+        <img src="https://drive.google.com/thumbnail?id=1ZSb9QdbeekYHjmfRy9wgpKofO3d2RTi0&sz=w800">
+        <div class="zoom-btn" onclick="event.stopPropagation(); window.open('https://drive.google.com/file/d/1ZSb9QdbeekYHjmfRy9wgpKofO3d2RTi0/view')">放大海報🔍</div>
+        <div class="overlay"><div class="check-mark">✓</div><div style="font-size:70px; font-weight:900;">100元</div></div>
+    </div>
+
+    <form id="regForm">
+        <div class="field"><label>姓名</label><input type="text" name="name" placeholder="請用此姓名登入zoom直播間"></div>
+        <div class="field"><label>性別</label><select name="gender" required><option value="">請點選</option><option>男</option><option>女</option></select></div>
+        <div class="field"><label>介紹人</label><input type="text" name="referrer" placeholder="按此輸入"></div>
+        <div class="field"><label>Email</label><input type="email" name="email" placeholder="若有填寫,報名成功系統會發信通知"></div>
+        
+        <div class="field"><label>居住縣市</label>
+            <select name="city" required>
+                <option value="">請點選</option><option>北北基</option><option>桃竹苗</option><option>中彰投</option>
+                <option>雲嘉南</option><option>高屏</option><option>宜花東離島</option><option>海外</option>
+            </select>
+        </div>
+
+        <div class="field"><label>年齡區間</label>
+            <select name="age" required>
+                <option value="">請點選</option><option>2001-2010</option><option>1991-2000</option><option>1981-1990</option>
+                <option>1971-1980</option><option>1961-1970</option><option>1960以前</option>
+            </select>
+        </div>
+
+        <div class="field"><label>身分別</label>
+            <select name="identity" required>
+                <option value="">請點選</option><option>上班族</option><option>老闆</option><option>自由業</option><option>家庭主婦</option><option>退休人士</option><option>其它</option>
+            </select>
+        </div>
+
+        <div class="field"><label>繳費方式</label>
+            <select name="payMethod" required id="payMethod" onchange="document.getElementById('proxyWrap').style.display=(this.value.includes('他人')?'block':'none')">
+                <option value="">請點選</option><option>由我本人Linepay繳費</option><option>請他人代繳</option>
+            </select>
+        </div>
+        <div style="color: #f39c12; font-size: 1rem; font-weight: 900; background: #fffbe6; border: none; padding: 12px; border-radius: 12px; margin-top: -10px; margin-bottom: 20px; line-height: 1.6;">
+    👤 收費窗口：杜俊傑<br>
+    🆔 LineID：geoffry0306 <br>
+    📞 電話搜尋：0912234429
 <h1 style="font-size: 2rem;">3/20(五),3/21(六)<br>線上直播報名</h1>
 
 <!-- 3/20 EDM -->
@@ -129,6 +228,11 @@ input, select { width: 100%; padding: 15px; border: 4px solid #000; border-radiu
 📞 電話搜尋：0912234429
 </div>
 <div id="proxyWrap" class="field" style="display:none">
+    <!-- 1. 修改標題顏色 -->
+    <label style="color: orange;">代繳人姓名</label>
+    
+    <!-- 2. 修改輸入框的文字顏色與邊框顏色 -->
+    <input type="text" name="payProxyName" style="color: orange; border-color: orange;">
 <!-- 1. 修改標題顏色 -->
 <label style="color: orange;">代繳人姓名</label>
 
@@ -136,14 +240,28 @@ input, select { width: 100%; padding: 15px; border: 4px solid #000; border-radiu
 <input type="text" name="payProxyName" style="color: orange; border-color: orange;">
 </div>
         <div class="price-display" id="priceDisplay" style="color: #ff4757;">請先點選<br>要報名的課程海報</div>
-        <div class="price-display" id="priceDisplay" style="color: #ff4757;">請先點選<br>報名的課程海報</div>
+<div class="price-display" id="priceDisplay" style="color: #ff4757;">請先點選<br>報名的課程海報</div>
 
+        <button type="button" class="submit-btn" id="sBtn" onclick="sendToGAS()">送出報名+取得ZOOM直播間號碼</button>
+    </form>
 <button type="button" class="submit-btn" id="sBtn" onclick="sendToGAS()">送出報名+取得直播連結</button>
 </form>
 </div>
 
 <!-- 成功視窗 -->
 <div id="modal">
+    <div class="m-card animate__animated animate__zoomIn">
+        <div style="text-align:right; font-size:30px; cursor:pointer;" onclick="location.reload()">×</div>
+        <p class="m-title">🎉 報名完成</p>
+        <p id="mTime" style="text-align:center; font-weight:bold; margin:5px 0;"></p>
+        
+        <div style="background:#ffeb3b; border:3px solid #000; padding:10px; text-align:center; font-weight:bold; color:red; margin:15px 0;">請截圖此畫面備份</div>
+        
+        <div id="summary" style="font-weight:bold; line-height:1.6; border-bottom:2px dashed #000; padding-bottom:10px; margin-bottom:10px;"></div>
+        
+        <div id="qrGroup"></div>
+
+    </div>
 <div class="m-card animate__animated animate__zoomIn">
 <div style="text-align:right; font-size:30px; cursor:pointer;" onclick="location.reload()">×</div>
 <p class="m-title">🎉 報名完成</p>
@@ -163,6 +281,54 @@ input, select { width: 100%; padding: 15px; border: 4px solid #000; border-radiu
 </div>
 
 <script>
+    let selected = [];
+    // 【修改此處】貼入您的 Google Apps Script 部署網址
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbyloFrzmFrx_kwsIFXHfpb8OmSIFeXAcdcKnsLu0XYmK_vcuQ6gP0NKMyD-k0vBk2U/exec"; 
+
+    function toggleDate(d) {
+        if(selected.includes(d)) selected = selected.filter(x=>x!==d); else selected.push(d);
+        document.getElementById('card320').classList.toggle('selected', selected.includes('3/20'));
+        document.getElementById('card321').classList.toggle('selected', selected.includes('3/21'));
+        document.getElementById('priceDisplay').innerText = "應繳金額" + (selected.length * 100) + " 元";
+        
+        const b = document.body; b.className = '';
+        if(selected.length==2) b.classList.add('theme-both');
+        else if(selected.includes('3/20')) b.classList.add('theme-320');
+        else if(selected.includes('3/21')) b.classList.add('theme-321');
+    }
+
+    async function sendToGAS() {
+        if(selected.length===0) return alert('請先點擊上方海報選擇課程！');
+        const f = document.getElementById('regForm');
+        if(!f.name.value) return alert('姓名為必填欄位！');
+
+        const btn = document.getElementById('sBtn');
+        btn.disabled = true; 
+        btn.innerText = "傳送中...請勿關閉";
+
+        const payload = {
+            name: f.name.value, gender: f.gender.value, referrer: f.referrer.value,
+            email: f.email.value, city: f.city.value, age: f.age.value,
+            identity: f.identity.value, payMethod: f.payMethod.value,
+            payProxyName: f.payProxyName.value, dates: selected.join(','), amount: selected.length*100
+        };
+
+        // 修改這裡：改用更簡單的 fetch 方式，不使用 await 等待
+        fetch(GAS_URL, {
+            method: "POST",
+            mode: "no-cors", // 關鍵：不要求跨網域回傳，直接發送
+            cache: "no-cache",
+            headers: { "Content-Type": "text/plain" },
+            body: JSON.stringify(payload)
+        });
+
+        // 發送後直接跳轉成功畫面，不等待回傳值
+        setTimeout(() => {
+            showSuccess(payload);
+            btn.disabled = false;
+            btn.innerText = "送出報名+取得直播連結";
+        }, 1500); // 延遲 1.5 秒讓使用者感覺有在傳送
+    }
 let selected = [];
 // 【修改此處】貼入您的 Google Apps Script 部署網址
 const GAS_URL = "https://script.google.com/macros/s/AKfycbyloFrzmFrx_kwsIFXHfpb8OmSIFeXAcdcKnsLu0XYmK_vcuQ6gP0NKMyD-k0vBk2U/exec"; 
@@ -212,6 +378,27 @@ btn.disabled = false; btn.innerText = "重新送出";
 }
 
 function showSuccess(d) {
+        document.getElementById('mTime').innerText = new Date().toLocaleString();
+        
+        // --- 新增：設定直播時間的文字 ---
+        let liveTimeStr = "";
+        if(d.dates.includes('3/20')) liveTimeStr += "3/20 (五) 19:00 - 21:30<br>";
+        if(d.dates.includes('3/21')) liveTimeStr += "3/21 (六) 19:00 - 21:00";
+        // ----------------------------
+
+        document.getElementById('summary').innerHTML = `
+            姓名：${d.name}<br>
+            Email：${d.email}<br>
+            金額：${d.amount}元<br>
+            直播時間：<span style="color:blue;">${liveTimeStr}</span>
+        `;
+        
+document.getElementById('qrGroup').innerHTML = `
+    <div style="text-align:center; font-size:1.2rem; font-weight:900; background:#fffbe6; border:3px solid #000; padding:15px; border-radius:15px; margin-bottom:15px; color:#000;">
+        💎 直播間 Zoom ID 號碼：<br>
+        688 688 1985 <br>
+        （密碼 688）
+    </div>`;
 document.getElementById('mTime').innerText = new Date().toLocaleString();
 
 // --- 新增：設定直播時間的文字 ---
@@ -224,14 +411,18 @@ document.getElementById('summary').innerHTML = `
            姓名：${d.name}<br>
            Email：${d.email}<br>
            金額：${d.amount}元<br>
-           直播時間：<br><span style="color:blue;">${liveTimeStr}</span>
+           直播時間：<span style="color:blue;">${liveTimeStr}</span>
        `;
-    <div style="text-align:center; font-size:1.2rem; font-weight:900; background:#fffbe6; border:3px solid #000; padding:15px; border-radius:15px; margin-bottom:15px; color:#000;">
-        💎 直播間 Zoom ID 號碼：<br>
-        688 688 1985 <br>
-        （密碼 688）
-    </div>
-    `;
+
+let qr = "";
+if(d.dates.includes('3/20')) {
+qr += `<div style="text-align:center; margin-bottom:15px;"><p>3/20 Line群 <a href="https://wbl.pse.is/LIVE20260320">點此加入</a> 索取直播連結</p><img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://wbl.pse.is/LIVE20260320" style="border:3px solid #000;"></div>`;
+}
+if(d.dates.includes('3/21')) {
+qr += `<div style="text-align:center; margin-bottom:15px;"><p>3/21 Line群 <a href="https://wbl.pse.is/LIVE20260321">點此加入</a> 索取直播連結</p><img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://wbl.pse.is/LIVE20260321" style="border:3px solid #000;"></div>`;
+}
+document.getElementById('qrGroup').innerHTML = qr;
+document.getElementById('modal').style.display = 'block';
 }
 </script>
 </body>
