@@ -170,9 +170,22 @@ if(!f.name.value) return alert('姓名為必填欄位！');
         }
     }
 
-    function showSuccess(d) {
+function showSuccess(d) {
         document.getElementById('mTime').innerText = new Date().toLocaleString();
-        document.getElementById('summary').innerHTML = `姓名：${d.name}<br>Email：${d.email}<br>金額：${d.amount}元<br>直播日期：${d.dates}`;
+        
+        // --- 新增：設定直播時間的文字 ---
+        let liveTimeStr = "";
+        if(d.dates.includes('3/20')) liveTimeStr += "3/20 (五) 19:00 - 21:30 <br>";
+        if(d.dates.includes('3/21')) liveTimeStr += "3/21 (六) 19:00 - 21:00";
+        // ----------------------------
+
+        document.getElementById('summary').innerHTML = `
+            姓名：${d.name}<br>
+            Email：${d.email}<br>
+            金額：${d.amount}元<br>
+            直播日期：${d.dates}<br>
+            直播時間：<span style="color:blue;">${liveTimeStr}</span>
+        `;
         
         let qr = "";
         if(d.dates.includes('3/20')) {
