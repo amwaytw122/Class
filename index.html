@@ -153,10 +153,6 @@ select:valid {
         
         <div id="qrGroup"></div>
 
-        <div style="font-size:15px; background:#f0f0f0; padding:10px; border-radius:15px; line-height:1.4;">
-            1. 直播連結會上傳到此Line群<br>2. 請用報名的名字申請加入Line群<br>3. 完成繳費後才會審核您入群<br>
-            <b>窗口：杜俊傑 (LineID: geoffry0306)</b>
-        </div>
     </div>
 </div>
 
@@ -169,7 +165,7 @@ select:valid {
         if(selected.includes(d)) selected = selected.filter(x=>x!==d); else selected.push(d);
         document.getElementById('card320').classList.toggle('selected', selected.includes('3/20'));
         document.getElementById('card321').classList.toggle('selected', selected.includes('3/21'));
-        document.getElementById('priceDisplay').innerText = "應繳金額：" + (selected.length * 100) + " 元";
+        document.getElementById('priceDisplay').innerText = "應繳金額" + (selected.length * 100) + " 元";
         
         const b = document.body; b.className = '';
         if(selected.length==2) b.classList.add('theme-both');
@@ -214,7 +210,7 @@ function showSuccess(d) {
         
         // --- 新增：設定直播時間的文字 ---
         let liveTimeStr = "";
-        if(d.dates.includes('3/20')) liveTimeStr += "3/20 (五) 19:00 - 21:30 <br>";
+        if(d.dates.includes('3/20')) liveTimeStr += "3/20 (五) 19:00 - 21:30<br>";
         if(d.dates.includes('3/21')) liveTimeStr += "3/21 (六) 19:00 - 21:00";
         // ----------------------------
 
@@ -226,15 +222,21 @@ function showSuccess(d) {
         `;
         
         let qr = "";
-        if(d.dates.includes('3/20')) {
-            qr += `<div style="text-align:center; margin-bottom:15px;"><p>3/20 Line群 <a href="https://wbl.pse.is/LIVE20260320">點此加入</a> 索取直播連結</p><img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://wbl.pse.is/LIVE20260320" style="border:3px solid #000;"></div>`;
-        }
-        if(d.dates.includes('3/21')) {
-            qr += `<div style="text-align:center; margin-bottom:15px;"><p>3/21 Line群 <a href="https://wbl.pse.is/LIVE20260321">點此加入</a> 索取直播連結</p><img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://wbl.pse.is/LIVE20260321" style="border:3px solid #000;"></div>`;
-        }
-        document.getElementById('qrGroup').innerHTML = qr;
-        document.getElementById('modal').style.display = 'block';
-    }
+       // 統一顯示 Zoom 直播間資訊與 QR Code
+        let zoomUrl = "https://us06web.zoom.us/j/6886881985?pwd=tFaHdb8OQXEeE8bupQG1Z6YTEr65pW.1";
+        let qr = `
+            <div style="text-align:center; margin-bottom:15px; border:2px solid #000; padding:10px; border-radius:15px;">
+                <p style="font-size:1.1rem; font-weight:900; margin-bottom:10px;">
+                    💎直播間Zoom ID號碼：<br>688 688 1985（密碼688）
+                </p>
+                <p>
+                    或按此直接進入直播間 👉 <br>
+                    <a href="${zoomUrl}" style="color:blue; text-decoration:underline; font-weight:bold;">點此開啟連結</a>
+                </p>
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(zoomUrl)}" 
+                     style="border:3px solid #000; margin-top:10px;">
+            </div>
+
 </script>
 </body>
 </html>
