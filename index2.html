@@ -17,14 +17,14 @@
             padding: 15px; 
             margin: 0; 
             transition: 0.4s;
-            box-shadow: none !important; /* 移除全頁陰影 */
+            box-shadow: none !important; 
         }
 
         .app-container {
             max-width: 500px;
             width: 100%;
             background: transparent;
-            box-shadow: none !important; /* 移除容器陰影 */
+            box-shadow: none !important; 
         }
 
         /* 2. 輸入框預設顏色 */
@@ -58,7 +58,7 @@
         .submit-btn:active { transform: translateY(10px); box-shadow: none; }
         .submit-btn:disabled { background: #999; cursor: not-allowed; }
 
-        /* 6. Modal 成功視窗 (依照截圖樣式) */
+        /* 6. Modal 成功視窗 */
         #modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:100; padding:15px; box-sizing:border-box; overflow-y:auto; }
         .m-card { background:#fff; border:6px solid #000; border-radius:30px; padding:25px; max-width:420px; margin: 40px auto; position:relative; }
         .m-title { color:red; text-align:center; font-size:28px; font-weight:900; margin:0; }
@@ -69,9 +69,9 @@
         .m-dashed { border-bottom: 4px dashed #000; margin: 20px 0; }
         .m-zoom-box { text-align:center; font-size:1.3rem; font-weight:900; background:#fffbe6; border:3px solid #000; padding:15px; border-radius:15px; margin-bottom:15px; color:#000; }
         
-        /* 分享按鈕 */
-        .share-btn { width:100%; padding:18px; background:#00c300; color:#fff; border:4px solid #000; border-radius:15px; font-size:1.3rem; font-weight:900; cursor:pointer; box-shadow:0 6px 0 #000; margin-top:10px; }
-        .share-btn:active { transform: translateY(4px); box-shadow:none; }
+        /* 複製按鈕樣式 */
+        .copy-btn { width:100%; padding:20px; background:#00c300; color:#fff; border:4px solid #000; border-radius:15px; font-size:1.4rem; font-weight:900; cursor:pointer; box-shadow:0 6px 0 #000; margin-top:10px; }
+        .copy-btn:active { transform: translateY(4px); box-shadow:none; }
     </style>
 </head>
 <body class="theme-default">
@@ -142,7 +142,7 @@
     </form>
 </div>
 
-<!-- 成功視窗 (Modal) -->
+<!-- 成功視窗 -->
 <div id="modal">
     <div class="m-card animate__animated animate__zoomIn">
         <div style="text-align:right; font-size:30px; cursor:pointer; font-weight:bold;" onclick="location.reload()">✕</div>
@@ -151,9 +151,7 @@
         
         <div class="m-yellow-box">請截圖此畫面備份</div>
         
-        <div id="summary">
-            <!-- 這裡會由 JS 動態填入姓名、Email、金額與時間 -->
-        </div>
+        <div id="summary"></div>
         
         <div class="m-dashed"></div>
         
@@ -163,12 +161,14 @@
             （密碼 688）
         </div>
 
-        <button type="button" class="share-btn" onclick="shareToMobile()">按此分享<br><span style="font-size:0.8rem;">(建議Line給自己或存備忘)</span></button>
+        <!-- 更改後的複製按鈕 -->
+        <button type="button" class="copy-btn" onclick="copyReminderText()">複製以上提醒文字</button>
     </div>
 </div>
 
 <script>
     let selected = [];
+    let currentPayload = {}; // 儲存最後一次成功的資料供複製使用
     const GAS_URL = "https://script.google.com/macros/s/AKfycbyloFrzmFrx_kwsIFXHfpb8OmSIFeXAcdcKnsLu0XYmK_vcuQ6gP0NKMyD-k0vBk2U/exec"; 
 
     function toggleDate(d) {
@@ -196,7 +196,7 @@
         const btn = document.getElementById('sBtn');
         btn.disabled = true; btn.innerText = "傳送中...請勿關閉";
 
-        const payload = {
+        currentPayload = {
             name: f.name.value, gender: f.gender.value, referrer: f.referrer.value,
             email: f.email.value, city: f.city.value, age: f.age.value,
             identity: f.identity.value, payMethod: f.payMethod.value,
@@ -204,8 +204,8 @@
         };
 
         try {
-            await fetch(GAS_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(payload) });
-            showSuccess(payload);
+            await fetch(GAS_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(currentPayload) });
+            showSuccess(currentPayload);
         } catch (err) {
             alert('發送失敗：' + err);
             btn.disabled = false; btn.innerText = "重新送出";
@@ -213,15 +213,12 @@
     }
 
     function showSuccess(d) {
-        // 設定目前時間
         document.getElementById('mTime').innerText = new Date().toLocaleString();
         
-        // 判定直播時間
         let liveTimeStr = "";
         if(d.dates.includes('3/20')) liveTimeStr += "3/20 (五) 19:00 - 21:30<br>";
         if(d.dates.includes('3/21')) liveTimeStr += "3/21 (六) 19:00 - 21:00";
 
-        // 填入資訊
         document.getElementById('summary').innerHTML = `
             <div class="m-data-row">姓名：${d.name}</div>
             <div class="m-data-row">Email：${d.email || ''}</div>
@@ -234,23 +231,32 @@
         window.scrollTo(0,0);
     }
 
-    function shareToMobile() {
-        const shareText = `💎直播間Zoom ID：688 688 1985（密碼 688）\n我已報名完成，請記得截圖備份資訊！`;
-        if (navigator.share) {
-            navigator.share({
-                title: '線上直播報名成功',
-                text: shareText,
-                url: window.location.href
-            }).catch(() => {});
-        } else {
-            const dummy = document.createElement("textarea");
-            document.body.appendChild(dummy);
-            dummy.value = shareText;
-            dummy.select();
+    function copyReminderText() {
+        // 動態判斷日期文字內容
+        let dateText = "";
+        const d = currentPayload.dates || "";
+        if(d.includes('3/20') && d.includes('3/21')) dateText = "3/20 (五) 19:00 - 21:30、3/21 (六) 19:00 - 21:00";
+        else if(d.includes('3/20')) dateText = "3/20 (五) 19:00 - 21:30";
+        else if(d.includes('3/21')) dateText = "3/21 (六) 19:00 - 21:00";
+
+        const textToCopy = `我已報名完成！${dateText}
+18:45即可開放入場等候審核。若等候超過5分鐘都沒有被准入，請退出zoom，再次確認您ZOOM的登入姓名，是否有與報名表單相同。
+💎直播間Zoom ID：688 688 1985（密碼 688）`;
+
+        // 執行複製動作
+        const dummy = document.createElement("textarea");
+        document.body.appendChild(dummy);
+        dummy.value = textToCopy;
+        dummy.select();
+        dummy.setSelectionRange(0, 99999); // 手機相容性
+        
+        try {
             document.execCommand("copy");
-            document.body.removeChild(dummy);
-            alert("已複製直播資訊，請至 Line 貼上發送。");
+            alert("複製完成，請到Line對話框貼上發送給自己，或貼到備忘錄或行事曆！");
+        } catch (err) {
+            alert("複製失敗，請手動截圖。");
         }
+        document.body.removeChild(dummy);
     }
 </script>
 </body>
