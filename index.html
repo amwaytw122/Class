@@ -63,9 +63,32 @@
         .zoom-btn { position: absolute; bottom: -45px; right: 5px; background: #fff; border: 3px solid #000; border-radius: 12px; padding: 8px; font-weight: bold; z-index: 10; }
 
         /* 5. 表單元件 */
-        .field { margin-bottom: 20px; }
-        label { display: block; font-weight: 900; margin-bottom: 8px; font-size: 1.1rem; }
-        input, select { width: 100%; padding: 15px; border: 4px solid #000; border-radius: 15px; font-size: 1.1rem; font-weight: bold; box-sizing: border-box; background: #fff; -webkit-appearance: none; }
+        .field { 
+    display: flex;           /* 開啟彈性佈局 */
+    align-items: center;     /* 垂直置中 */
+    margin-bottom: 15px;     /* 稍微縮減行距 */
+}
+      .field label { 
+    flex: 0 0 90px;          /* 固定標題寬度為 90px，不被壓縮 */
+    font-weight: 900; 
+    font-size: 1.1rem; 
+    margin-bottom: 0;        /* 移除原本下方的間距 */
+    text-align: right;       /* 文字靠右對齊，視覺更整齊 */
+    padding-right: 12px;     /* 與輸入框的間距 */
+    white-space: nowrap;     /* 防止標題換行 */
+}
+
+.field input, .field select { 
+    flex: 1;                 /* 讓輸入框自動填滿剩餘空間 */
+    width: 100%; 
+    padding: 12px;           /* 稍微縮減內距，節省空間 */
+    border: 4px solid #000; 
+    border-radius: 15px; 
+    font-size: 1.1rem; 
+    font-weight: bold; 
+    box-sizing: border-box; 
+    background: #fff; 
+}
         .price-display { color: #ff4757; text-align: center; font-size: 2.2rem; font-weight: 900; margin: 10px 0; }
         .submit-btn { width: 100%; padding: 25px; background: #ff4757; color: #fff; border: 5px solid #000; border-radius: 20px; font-size: 1.6rem; font-weight: 900; box-shadow: 0 10px 0 #000; cursor: pointer; }
         .submit-btn:active { transform: translateY(10px); box-shadow: none; }
