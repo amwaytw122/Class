@@ -70,27 +70,27 @@
         
         <div class="field"><label>居住縣市</label>
             <select name="city">
-                <option>北北基</option><option selected>桃竹苗</option><option>中彰投</option>
+                <option value="">請點選</option><option>北北基</option><option selected>桃竹苗</option><option>中彰投</option>
                 <option>雲嘉南</option><option>高屏</option><option>宜花東離島</option><option>海外</option>
             </select>
         </div>
 
         <div class="field"><label>年齡區間</label>
             <select name="age">
-                <option>2001-2010</option><option>1991-2000</option><option selected>1981-1990</option>
+                <option value="">請點選</option><option>2001-2010</option><option>1991-2000</option><option>1981-1990</option>
                 <option>1971-1980</option><option>1961-1970</option><option>1960以前</option>
             </select>
         </div>
 
         <div class="field"><label>身分別</label>
             <select name="identity">
-                <option>上班族</option><option>老闆</option><option>自由業</option><option>家庭主婦</option><option>退休人士</option><option>其它</option>
+                <option value="">請點選</option><option>上班族</option><option>老闆</option><option>自由業</option><option>家庭主婦</option><option>退休人士</option><option>其它</option>
             </select>
         </div>
 
         <div class="field"><label>繳費方式</label>
             <select name="payMethod" id="payMethod" onchange="document.getElementById('proxyWrap').style.display=(this.value.includes('他人')?'block':'none')">
-                <option>本人Linepay繳費給窗口</option><option>請他人代繳</option>
+                <option value="">請點選</option><option>本人Linepay繳費給窗口</option><option>請他人代繳</option>
             </select>
         </div>
         <div id="proxyWrap" class="field" style="display:none"><label>代繳人姓名</label><input type="text" name="payProxyName"></div>
