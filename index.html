@@ -20,6 +20,21 @@
 select:invalid, select option[value=""] {
     color: #ccc;
 }
+
+/* 1. 當選單處於「未選取」狀態時，文字顯示淺灰色 */
+select:invalid {
+    color: #ccc !important;
+}
+
+/* 2. 當點開選單後，裡面的選項內容要恢復成黑色 */
+select option {
+    color: #000;
+}
+
+/* 3. 當已經選了內容後，選單文字要變回黑色 */
+select:valid {
+    color: #000;
+}
         
         :root { --border: #000; --accent: #ff4757; --bg: #f0f0f0; }
         body { font-family: 'Noto Sans TC', sans-serif; background: var(--bg); display: flex; justify-content: center; padding: 15px; margin: 0; transition: 0.4s; }
@@ -79,7 +94,7 @@ select:invalid, select option[value=""] {
 
     <form id="regForm">
         <div class="field"><label>姓名</label><input type="text" name="name" placeholder="請用此姓名登入zoom直播間"></div>
-        <div class="field"><label>性別</label><select name="gender" required><option value="未提供">請點選</option><option>男</option><option>女</option></select></div>
+        <div class="field"><label>性別</label><select name="gender" required><option value="">請點選</option><option>男</option><option>女</option></select></div>
         <div class="field"><label>介紹人</label><input type="text" name="referrer" placeholder="按此輸入"></div>
         <div class="field"><label>Email</label><input type="email" name="email" placeholder="若有填寫,報名成功系統會發信通知"></div>
         
