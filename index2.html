@@ -235,13 +235,13 @@
         // 動態判斷日期文字內容
         let dateText = "";
         const d = currentPayload.dates || "";
-        if(d.includes('3/20') && d.includes('3/21')) dateText = "3/20 (五) 19:00 - 21:30、3/21 (六) 19:00 - 21:00";
-        else if(d.includes('3/20')) dateText = "3/20 (五) 19:00 - 21:30";
-        else if(d.includes('3/21')) dateText = "3/21 (六) 19:00 - 21:00";
+        if(d.includes('3/20') && d.includes('3/21')) dateText = "3/20(五)19:00、3/21(六)19:00";
+        else if(d.includes('3/20')) dateText = "3/20 (五) 19:00";
+        else if(d.includes('3/21')) dateText = "3/21 (六) 19:00";
 
         const textToCopy = `我已報名完成！${dateText}
-18:45即可開放入場等候審核。若等候超過5分鐘都沒有被准入，請退出zoom，再次確認您ZOOM的登入姓名，是否有與報名表單相同。
-💎直播間Zoom ID：688 688 1985（密碼 688）`;
+<br>請記得儘速linepay繳費<br>會議當天18:45即可開放入場等候審核。<br>若等候超過5分鐘都沒有被准入，請退出zoom，再次確認您ZOOM的登入姓名，是否有與報名表單相同。
+<br><br>💎直播間Zoom ID：688 688 1985（密碼 688）`;
 
         // 執行複製動作
         const dummy = document.createElement("textarea");
