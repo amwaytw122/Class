@@ -18,8 +18,8 @@
         h1 { font-size: 1.5rem; text-align: center; border-bottom: 6px solid #000; padding-bottom: 15px; font-weight: 900; margin-top: 0; }
 
         /* EDM 樣式 */
-        .edm-box { position: relative; border: 5px solid #000; border-radius: 20px; overflow: hidden; margin-bottom: 20px; cursor: pointer; transition: 0.2s; background: #eee; }
-        .edm-box img { width: 100%; display: block; }
+        .edm-box { position: relative; border: 5px solid #000; border-radius: 20px; overflow: visible; margin-bottom: 50px; cursor: pointer; transition: 0.2s; background: #eee; }
+        .edm-box img { width: 100%; display: block;border-radius: 15px; }
         .edm-box.selected { border-color: var(--accent); transform: translateY(5px); }
         .overlay { position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.8); display:none; flex-direction: column; justify-content:center; align-items:center; color:#fff; }
         .edm-box.selected .overlay { display: flex; }
@@ -130,7 +130,7 @@
         if(selected.includes(d)) selected = selected.filter(x=>x!==d); else selected.push(d);
         document.getElementById('card320').classList.toggle('selected', selected.includes('3/20'));
         document.getElementById('card321').classList.toggle('selected', selected.includes('3/21'));
-        document.getElementById('priceDisplay').innerText = "報名金額：" + (selected.length * 100) + " 元";
+        document.getElementById('priceDisplay').innerText = "應繳金額：" + (selected.length * 100) + " 元";
         
         const b = document.body; b.className = '';
         if(selected.length==2) b.classList.add('theme-both');
