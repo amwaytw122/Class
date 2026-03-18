@@ -34,9 +34,9 @@
         select:valid { color: #000; }
 
         /* 3. 動態主題背景 */
-        body.theme-320 { background: #FFFFB9; --accent: #f1c40f; }
+        body.theme-320 { background: #FFE153; --accent: #f1c40f; }
         body.theme-321 { background: #D3FF93; --accent: #2ecc71; }
-        body.theme-both { background: #fff0f3; --accent: #e91e63; }
+        body.theme-both { background: #CA8EC2; --accent: #e91e63; }
 
         h1 { font-size: 2.3rem; text-align: center; border-bottom: 6px solid #000; padding-bottom: 15px; font-weight: 900; margin-top: 0; }
 
@@ -138,7 +138,7 @@
 
         <div class="price-display" id="priceDisplay">請先點選<br>報名的課程海報</div>
 
-        <button type="button" class="submit-btn" id="sBtn" onclick="sendToGAS()">送出報名+取得直播連結</button>
+        <button type="button" class="submit-btn" id="sBtn" onclick="sendToGAS()">送出報名+取得ZOOM直播號碼</button>
     </form>
 </div>
 
@@ -231,33 +231,35 @@
         window.scrollTo(0,0);
     }
 
-    function copyReminderText() {
-        // 動態判斷日期文字內容
-        let dateText = "";
-        const d = currentPayload.dates || "";
-        if(d.includes('3/20') && d.includes('3/21')) dateText = "3/20(五)19:00、3/21(六)19:00";
-        else if(d.includes('3/20')) dateText = "3/20 (五) 19:00";
-        else if(d.includes('3/21')) dateText = "3/21 (六) 19:00";
+function copyReminderText() {
+    let dateText = "";
+    const d = currentPayload.dates || "";
+    if(d.includes('3/20') && d.includes('3/21')) dateText = "3/20(五)19:00、3/21(六)19:00";
+    else if(d.includes('3/20')) dateText = "3/20(五)19:00";
+    else if(d.includes('3/21')) dateText = "3/21(六)19:00";
 
-        const textToCopy = `我已報名完成！${dateText}
-<br>請記得儘速linepay繳費<br>會議當天18:45即可開放入場等候審核。<br>若等候超過5分鐘都沒有被准入，請退出zoom，再次確認您ZOOM的登入姓名，是否有與報名表單相同。
-<br><br>💎直播間Zoom ID：688 688 1985（密碼 688）`;
+    // 使用 \n 來達成真正的強迫換行
+    const textToCopy = `我已報名完成！${dateText}
+請記得儘速linepay繳費
+會議當天18:45即可開放入場等候審核。
+若等候超過5分鐘都沒有被准入，請退出zoom，再次確認您ZOOM的登入姓名，是否有與報名表單相同。
 
-        // 執行複製動作
-        const dummy = document.createElement("textarea");
-        document.body.appendChild(dummy);
-        dummy.value = textToCopy;
-        dummy.select();
-        dummy.setSelectionRange(0, 99999); // 手機相容性
-        
-        try {
-            document.execCommand("copy");
-            alert("複製完成，請到Line對話框貼上發送給自己，或貼到備忘錄或行事曆！");
-        } catch (err) {
-            alert("複製失敗，請手動截圖。");
-        }
-        document.body.removeChild(dummy);
+💎直播間Zoom ID：688 688 1985（密碼 688）`;
+
+    const dummy = document.createElement("textarea");
+    document.body.appendChild(dummy);
+    dummy.value = textToCopy;
+    dummy.select();
+    dummy.setSelectionRange(0, 99999); 
+    
+    try {
+        document.execCommand("copy");
+        alert("複製完成，請到Line對話框貼上發送給自己，或貼到備忘錄或行事曆！");
+    } catch (err) {
+        alert("複製失敗。");
     }
+    document.body.removeChild(dummy);
+}
 </script>
 </body>
 </html>
