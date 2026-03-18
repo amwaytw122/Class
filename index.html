@@ -128,9 +128,14 @@ select:valid {
     🆔 LineID：geoffry0306 <br>
     📞 電話號碼Line搜尋：0912234429
 </div>
-        <div id="proxyWrap" class="field" style="display:none"><label>代繳人姓名</label><input type="text" name="payProxyName"></div>
-
-        <div class="price-display" id="priceDisplay">請先選擇要報名的課程圖片</div>
+<div id="proxyWrap" class="field" style="display:none">
+    <!-- 1. 修改標題顏色 -->
+    <label style="color: orange;">代繳人姓名</label>
+    
+    <!-- 2. 修改輸入框的文字顏色與邊框顏色 -->
+    <input type="text" name="payProxyName" style="color: orange; border-color: orange;">
+</div>
+        <div class="price-display" id="priceDisplay" style="color: #ff4757;">請先選擇要報名的課程圖片</div>
 
         <button type="button" class="submit-btn" id="sBtn" onclick="sendToGAS()">送出報名+取得直播連結</button>
     </form>
@@ -176,7 +181,7 @@ select:valid {
     async function sendToGAS() {
         if(selected.length===0) return alert('請先點選海報選擇課程！');
         const f = document.getElementById('regForm');
-if(!f.name.value) return alert('姓名為必填欄位！');
+if(!f.name.value) return alert('姓名為必填欄位（登入Zoom直播間的名稱）');
 
         const btn = document.getElementById('sBtn');
         btn.disabled = true; btn.innerText = "傳送中...請勿關閉";
