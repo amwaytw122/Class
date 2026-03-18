@@ -6,6 +6,21 @@
     <title>3/20、3/21線上直播報名</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <style>
+        /* 修改所有輸入框的預設文字顏色 */
+::placeholder {
+    color: #ccc;      /* 改成更淺的灰色 (例如 #ccc 或 #ddd) */
+    opacity: 1;       /* 確保在 Firefox 瀏覽器上顏色不會變淡 */
+}
+
+/* 針對不同瀏覽器的相容性設定 */
+::-webkit-input-placeholder { color: #ccc; } /* Chrome/Safari */
+::-moz-placeholder { color: #ccc; }          /* Firefox */
+:-ms-input-placeholder { color: #ccc; }      /* IE/Edge */
+
+select:invalid, select option[value=""] {
+    color: #ccc;
+}
+        
         :root { --border: #000; --accent: #ff4757; --bg: #f0f0f0; }
         body { font-family: 'Noto Sans TC', sans-serif; background: var(--bg); display: flex; justify-content: center; padding: 15px; margin: 0; transition: 0.4s; }
         
