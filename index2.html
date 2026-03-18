@@ -6,17 +6,7 @@
     <title>3/20、3/21線上直播報名</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <style>
-        /* 修改所有輸入框的預設文字顏色 */
-        ::placeholder { color: #ccc; opacity: 1; }
-        ::-webkit-input-placeholder { color: #ccc; }
-        ::-moz-placeholder { color: #ccc; }
-        :-ms-input-placeholder { color: #ccc; }
-
-        select:invalid, select option[value=""] { color: #ccc; }
-        select:invalid { color: #ccc !important; }
-        select option { color: #000; }
-        select:valid { color: #000; }
-        
+        /* 1. 基礎設定與移除外框陰影 */
         :root { --border: #000; --accent: #ff4757; --bg: #f0f0f0; }
         
         body { 
@@ -27,24 +17,31 @@
             padding: 15px; 
             margin: 0; 
             transition: 0.4s;
-            /* 移除可能的外框或陰影 */
-            box-shadow: none;
+            box-shadow: none !important; /* 移除全頁陰影 */
         }
-        
+
         .app-container {
             max-width: 500px;
             width: 100%;
+            background: transparent;
+            box-shadow: none !important; /* 移除容器陰影 */
         }
 
-        /* 動態配色 */
+        /* 2. 輸入框預設顏色 */
+        ::placeholder { color: #ccc; opacity: 1; }
+        select:invalid { color: #ccc !important; }
+        select option { color: #000; }
+        select:valid { color: #000; }
+
+        /* 3. 動態主題背景 */
         body.theme-320 { background: #2c3e50; --accent: #f1c40f; }
         body.theme-321 { background: #e8f5e9; --accent: #2ecc71; }
         body.theme-both { background: #fff0f3; --accent: #e91e63; }
 
-        h1 { font-size: 1.5rem; text-align: center; border-bottom: 6px solid #000; padding-bottom: 15px; font-weight: 900; margin-top: 0; }
+        h1 { font-size: 2.3rem; text-align: center; border-bottom: 6px solid #000; padding-bottom: 15px; font-weight: 900; margin-top: 0; }
 
-        /* EDM 樣式 */
-        .edm-box { position: relative; border: 5px solid #000; border-radius: 20px; overflow: visible; margin-bottom: 50px; cursor: pointer; transition: 0.2s; background: #eee; box-shadow: none; }
+        /* 4. EDM 樣式 */
+        .edm-box { position: relative; border: 5px solid #000; border-radius: 20px; overflow: visible; margin-bottom: 50px; cursor: pointer; transition: 0.2s; background: #eee; }
         .edm-box img { width: 100%; display: block; border-radius: 15px; }
         .edm-box.selected { border-color: var(--accent); transform: translateY(5px); }
         .overlay { position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.8); display:none; flex-direction: column; justify-content:center; align-items:center; color:#fff; border-radius: 15px; }
@@ -52,44 +49,35 @@
         .check-mark { font-size: 100px; color: #2ecc71; font-weight: 900; }
         .zoom-btn { position: absolute; bottom: -45px; right: 5px; background: #fff; border: 3px solid #000; border-radius: 12px; padding: 8px; font-weight: bold; z-index: 10; }
 
-        /* 表單風格 */
+        /* 5. 表單元件 */
         .field { margin-bottom: 20px; }
         label { display: block; font-weight: 900; margin-bottom: 8px; font-size: 1.1rem; }
         input, select { width: 100%; padding: 15px; border: 4px solid #000; border-radius: 15px; font-size: 1.1rem; font-weight: bold; box-sizing: border-box; background: #fff; -webkit-appearance: none; }
-        
-        .price-display { background: none; color: #000; text-align: center; padding: 10px; border-radius: 20px; font-size: 2.2rem; font-weight: 900; margin: 10px 0; border: none; }
-
+        .price-display { color: #ff4757; text-align: center; font-size: 2.2rem; font-weight: 900; margin: 10px 0; }
         .submit-btn { width: 100%; padding: 25px; background: #ff4757; color: #fff; border: 5px solid #000; border-radius: 20px; font-size: 1.6rem; font-weight: 900; box-shadow: 0 10px 0 #000; cursor: pointer; }
         .submit-btn:active { transform: translateY(10px); box-shadow: none; }
         .submit-btn:disabled { background: #999; cursor: not-allowed; }
 
-        /* Modal 成功視窗 */
+        /* 6. Modal 成功視窗 (依照截圖樣式) */
         #modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:100; padding:15px; box-sizing:border-box; overflow-y:auto; }
-        .m-card { background:#fff; border:6px solid #000; border-radius:30px; padding:25px; max-width:420px; margin:60px auto auto auto; position:relative; }
-        .m-title { color:red; text-align:center; font-size:28px; font-weight:900; margin-bottom:20px; }
-
-        /* 分享按鈕樣式 */
-        .share-btn { 
-            width: 100%; 
-            padding: 20px; 
-            background: #00c300; /* Line Green */
-            color: #fff; 
-            border: 4px solid #000; 
-            border-radius: 15px; 
-            font-size: 1.3rem; 
-            font-weight: 900; 
-            cursor: pointer; 
-            margin-top: 20px;
-            text-align: center;
-            box-shadow: 0 6px 0 #000;
-        }
-        .share-btn:active { transform: translateY(4px); box-shadow: none; }
+        .m-card { background:#fff; border:6px solid #000; border-radius:30px; padding:25px; max-width:420px; margin: 40px auto; position:relative; }
+        .m-title { color:red; text-align:center; font-size:28px; font-weight:900; margin:0; }
+        .m-time { text-align:center; font-weight:900; font-size:1.3rem; margin: 10px 0; }
+        .m-yellow-box { background:#ffeb3b; border:4px solid #000; padding:12px; text-align:center; font-weight:900; color:red; margin:15px 0; font-size:1.4rem; border-radius: 5px; }
+        .m-data-row { font-weight:900; font-size:1.3rem; line-height:1.8; margin: 5px 0; }
+        .m-blue-time { color: blue; font-weight: 900; }
+        .m-dashed { border-bottom: 4px dashed #000; margin: 20px 0; }
+        .m-zoom-box { text-align:center; font-size:1.3rem; font-weight:900; background:#fffbe6; border:3px solid #000; padding:15px; border-radius:15px; margin-bottom:15px; color:#000; }
+        
+        /* 分享按鈕 */
+        .share-btn { width:100%; padding:18px; background:#00c300; color:#fff; border:4px solid #000; border-radius:15px; font-size:1.3rem; font-weight:900; cursor:pointer; box-shadow:0 6px 0 #000; margin-top:10px; }
+        .share-btn:active { transform: translateY(4px); box-shadow:none; }
     </style>
 </head>
 <body class="theme-default">
 
 <div class="app-container animate__animated animate__fadeIn">
-    <h1 style="font-size: 2.3rem;">3/20(五) 3/21(六)<br>線上直播報名</h1>
+    <h1>3/20(五) 3/21(六)<br>線上直播報名</h1>
 
     <!-- 3/20 EDM -->
     <div id="card320" class="edm-box" onclick="toggleDate('3/20')">
@@ -148,35 +136,39 @@
             <input type="text" name="payProxyName" style="color: orange; border-color: orange;">
         </div>
 
-        <div class="price-display" id="priceDisplay" style="color: #ff4757;">請先點選<br>報名的課程海報</div>
+        <div class="price-display" id="priceDisplay">請先點選<br>報名的課程海報</div>
 
         <button type="button" class="submit-btn" id="sBtn" onclick="sendToGAS()">送出報名+取得直播連結</button>
     </form>
 </div>
 
-<!-- 成功視窗 -->
+<!-- 成功視窗 (Modal) -->
 <div id="modal">
     <div class="m-card animate__animated animate__zoomIn">
-        <div style="text-align:right; font-size:30px; cursor:pointer; font-weight: bold;" onclick="location.reload()">✕</div>
+        <div style="text-align:right; font-size:30px; cursor:pointer; font-weight:bold;" onclick="location.reload()">✕</div>
         <p class="m-title">🎉 報名完成 🎉</p>
+        <p id="mTime" class="m-time"></p>
         
-        <div style="text-align:center; font-size:1.6rem; font-weight:900; background:#fffbe6; border:4px solid #000; padding:20px; border-radius:20px; margin-bottom:20px; color:#000; line-height: 1.5;">
-            💎直播間Zoom ID號碼：<br>
-            <span style="font-size: 2.2rem; color: #e91e63;">688 688 1985</span><br>
+        <div class="m-yellow-box">請截圖此畫面備份</div>
+        
+        <div id="summary">
+            <!-- 這裡會由 JS 動態填入姓名、Email、金額與時間 -->
+        </div>
+        
+        <div class="m-dashed"></div>
+        
+        <div class="m-zoom-box">
+            💎直播間Zoom ID號碼💎<br>
+            <span style="font-size:1.8rem;">688 688 1985</span><br>
             （密碼 688）
         </div>
 
-        <div style="background:#ffeb3b; border:3px solid #000; padding:10px; text-align:center; font-weight:bold; color:red; margin:15px 0; border-radius: 10px;">請截圖此畫面備份</div>
-        
-        <button class="share-btn" onclick="shareToMobile()">按此分享<br><span style="font-size: 0.9rem;">(建議Line給自己或存備忘)</span></button>
-
-        <div style="text-align: center; margin-top: 15px; color: #666; font-size: 0.8rem;">點擊上方按鈕可快速轉傳至 Line</div>
+        <button type="button" class="share-btn" onclick="shareToMobile()">按此分享<br><span style="font-size:0.8rem;">(建議Line給自己或存備忘)</span></button>
     </div>
 </div>
 
 <script>
     let selected = [];
-    // 您的 Google Apps Script 部署網址
     const GAS_URL = "https://script.google.com/macros/s/AKfycbyloFrzmFrx_kwsIFXHfpb8OmSIFeXAcdcKnsLu0XYmK_vcuQ6gP0NKMyD-k0vBk2U/exec"; 
 
     function toggleDate(d) {
@@ -194,7 +186,6 @@
         if(selected.length==2) b.classList.add('theme-both');
         else if(selected.includes('3/20')) b.classList.add('theme-320');
         else if(selected.includes('3/21')) b.classList.add('theme-321');
-        else b.classList.add('theme-default');
     }
 
     async function sendToGAS() {
@@ -213,41 +204,52 @@
         };
 
         try {
-            await fetch(GAS_URL, {
-                method: "POST",
-                mode: "no-cors",
-                body: JSON.stringify(payload)
-            });
-            showSuccess();
+            await fetch(GAS_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(payload) });
+            showSuccess(payload);
         } catch (err) {
             alert('發送失敗：' + err);
             btn.disabled = false; btn.innerText = "重新送出";
         }
     }
 
-    function showSuccess() {
+    function showSuccess(d) {
+        // 設定目前時間
+        document.getElementById('mTime').innerText = new Date().toLocaleString();
+        
+        // 判定直播時間
+        let liveTimeStr = "";
+        if(d.dates.includes('3/20')) liveTimeStr += "3/20 (五) 19:00 - 21:30<br>";
+        if(d.dates.includes('3/21')) liveTimeStr += "3/21 (六) 19:00 - 21:00";
+
+        // 填入資訊
+        document.getElementById('summary').innerHTML = `
+            <div class="m-data-row">姓名：${d.name}</div>
+            <div class="m-data-row">Email：${d.email || ''}</div>
+            <div class="m-data-row">金額：${d.amount}元</div>
+            <div class="m-data-row">直播時間：</div>
+            <div class="m-data-row m-blue-time">${liveTimeStr}</div>
+        `;
+        
         document.getElementById('modal').style.display = 'block';
         window.scrollTo(0,0);
     }
 
     function shareToMobile() {
-        const shareData = {
-            title: '直播報名資訊',
-            text: '🎉 我已報名成功！\n💎直播間Zoom ID：688 688 1985（密碼688）',
-            url: window.location.href
-        };
-
+        const shareText = `💎直播間Zoom ID：688 688 1985（密碼 688）\n我已報名完成，請記得截圖備份資訊！`;
         if (navigator.share) {
-            navigator.share(shareData).catch((err) => console.log('分享取消'));
+            navigator.share({
+                title: '線上直播報名成功',
+                text: shareText,
+                url: window.location.href
+            }).catch(() => {});
         } else {
-            // 備案：若不支援分享 API (如電腦版)，則複製文字
             const dummy = document.createElement("textarea");
             document.body.appendChild(dummy);
-            dummy.value = shareData.text;
+            dummy.value = shareText;
             dummy.select();
             document.execCommand("copy");
             document.body.removeChild(dummy);
-            alert("您的裝置不支援自動分享，已為您複製直播資訊，請直接貼上至 Line。");
+            alert("已複製直播資訊，請至 Line 貼上發送。");
         }
     }
 </script>
