@@ -66,7 +66,7 @@
         <div class="field"><label>姓名</label><input type="text" name="name" placeholder="請輸入姓名"></div>
         <div class="field"><label>性別</label><select name="gender"><option value="未提供">請選擇</option><option>男</option><option>女</option></select></div>
         <div class="field"><label>介紹人</label><input type="text" name="referrer" placeholder="推薦人姓名"></div>
-        <div class="field"><label>Email(建議填寫會發送通知信)</label><input type="email" name="email"></div>
+        <div class="field"><label>Email(若有填寫會發通知信)</label><input type="email" name="email"></div>
         
         <div class="field"><label>居住縣市</label>
             <select name="city">
@@ -84,7 +84,7 @@
 
         <div class="field"><label>身分別</label>
             <select name="identity">
-                <option>上班族</option><option>老闆</option><option>自由業</option><option>家庭主婦</option><option>退休人士</option>
+                <option>上班族</option><option>老闆</option><option>自由業</option><option>家庭主婦</option><option>退休人士</option><option>其它</option>
             </select>
         </div>
 
@@ -95,7 +95,7 @@
         </div>
         <div id="proxyWrap" class="field" style="display:none"><label>代繳人姓名</label><input type="text" name="payProxyName"></div>
 
-        <div class="price-display" id="priceDisplay">金額0元</div>
+        <div class="price-display" id="priceDisplay">請點選要報名的海報圖</div>
 
         <button type="button" class="submit-btn" id="sBtn" onclick="sendToGAS()">送出報名+查看Linepay繳費窗口</button>
     </form>
