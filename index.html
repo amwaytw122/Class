@@ -221,12 +221,12 @@ function showSuccess(d) {
             直播時間：<span style="color:blue;">${liveTimeStr}</span>
         `;
         
-       // 統一顯示 Zoom 直播間資訊與 QR Code
-            <div style="text-align:center; margin-bottom:15px; border:2px solid #000; padding:10px; border-radius:15px;">
-                <p style="font-size:1.1rem; font-weight:900; margin-bottom:10px;">
-                    💎直播間Zoom ID號碼：<br>688 688 1985（密碼688）
-                </p>
-            </div>
+document.getElementById('qrGroup').innerHTML = `
+    <div style="text-align:center; font-size:1.2rem; font-weight:900; background:#fffbe6; border:3px solid #000; padding:15px; border-radius:15px; margin-bottom:15px; color:#000;">
+        💎 直播間 Zoom ID 號碼：<br>
+        688 688 1985 <br>
+        （密碼 688）
+    </div>`;
 }
 </script>
 </body>
