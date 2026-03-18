@@ -188,10 +188,10 @@ function showSuccess(d) {
         
         let qr = "";
         if(d.dates.includes('3/20')) {
-            qr += `<div style="text-align:center; margin-bottom:15px;"><p>3/20 Line群：<a href="https://wbl.pse.is/LIVE20260320">點此加入</a></p><img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://wbl.pse.is/LIVE20260320" style="border:3px solid #000;"></div>`;
+            qr += `<div style="text-align:center; margin-bottom:15px;"><p>3/20 Line群 <a href="https://wbl.pse.is/LIVE20260320">點此加入</a> 索取直播連結</p><img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://wbl.pse.is/LIVE20260320" style="border:3px solid #000;"></div>`;
         }
         if(d.dates.includes('3/21')) {
-            qr += `<div style="text-align:center; margin-bottom:15px;"><p>3/21 Line群：<a href="https://wbl.pse.is/LIVE20260321">點此加入</a></p><img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://wbl.pse.is/LIVE20260321" style="border:3px solid #000;"></div>`;
+            qr += `<div style="text-align:center; margin-bottom:15px;"><p>3/21 Line群 <a href="https://wbl.pse.is/LIVE20260321">點此加入</a> 索取直播連結</p><img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://wbl.pse.is/LIVE20260321" style="border:3px solid #000;"></div>`;
         }
         document.getElementById('qrGroup').innerHTML = qr;
         document.getElementById('modal').style.display = 'block';
