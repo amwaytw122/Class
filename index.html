@@ -150,12 +150,14 @@ select:valid {
         <div style="background:#ffeb3b; border:3px solid #000; padding:10px; text-align:center; font-weight:bold; color:red; margin:15px 0;">請截圖此畫面備份</div>
         
         <div id="summary" style="font-weight:bold; line-height:1.6; border-bottom:2px dashed #000; padding-bottom:10px; margin-bottom:10px;"></div>
-           <div style="text-align:center; font-size:1.2rem; font-weight:900; background:#fffbe6; border:3px solid #000; padding:15px; border-radius:15px; margin-bottom:15px; color:#000;">
-        💎 直播間 Zoom ID 號碼：<br>
-        688 688 1985 <br>
-        （密碼 688）
-    </div>
+        
+        <div id="qrGroup"></div>
 
+        <div style="font-size:15px; background:#f0f0f0; padding:10px; border-radius:15px; line-height:1.4;">
+            1. 直播連結會上傳到此Line群<br>2. 請用報名的名字申請加入Line群<br>3. 完成繳費後才會審核您入群<br>
+            <b>窗口：杜俊傑 (LineID: geoffry0306)</b>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -167,7 +169,7 @@ select:valid {
         if(selected.includes(d)) selected = selected.filter(x=>x!==d); else selected.push(d);
         document.getElementById('card320').classList.toggle('selected', selected.includes('3/20'));
         document.getElementById('card321').classList.toggle('selected', selected.includes('3/21'));
-        document.getElementById('priceDisplay').innerText = "應繳金額 " + (selected.length * 100) + " 元";
+        document.getElementById('priceDisplay').innerText = "應繳金額：" + (selected.length * 100) + " 元";
         
         const b = document.body; b.className = '';
         if(selected.length==2) b.classList.add('theme-both');
@@ -222,6 +224,16 @@ function showSuccess(d) {
             金額：${d.amount}元<br>
             直播時間：<span style="color:blue;">${liveTimeStr}</span>
         `;
+        
+        let qr = "";
+        if(d.dates.includes('3/20')) {
+            qr += `<div style="text-align:center; margin-bottom:15px;"><p>3/20 Line群 <a href="https://wbl.pse.is/LIVE20260320">點此加入</a> 索取直播連結</p><img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://wbl.pse.is/LIVE20260320" style="border:3px solid #000;"></div>`;
+        }
+        if(d.dates.includes('3/21')) {
+            qr += `<div style="text-align:center; margin-bottom:15px;"><p>3/21 Line群 <a href="https://wbl.pse.is/LIVE20260321">點此加入</a> 索取直播連結</p><img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://wbl.pse.is/LIVE20260321" style="border:3px solid #000;"></div>`;
+        }
+        document.getElementById('qrGroup').innerHTML = qr;
+        document.getElementById('modal').style.display = 'block';
     }
 </script>
 </body>
