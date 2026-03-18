@@ -167,7 +167,19 @@
 
 <script>
     let selected = [];
-    let currentPayload = {}; 
+    let currentPayload = {
+            name: f.name.value.trim(), 
+            gender: f.gender.value, 
+            referrer: f.referrer.value.trim(),
+            email: f.email.value.trim(), // 確保去掉前後空白
+            city: f.city.value, 
+            age: f.age.value,
+            identity: f.identity.value, 
+            payMethod: f.payMethod.value,
+            payProxyName: f.payProxyName.value.trim(), 
+            dates: selected.join(','), 
+            amount: selected.length * 100
+        };
     const GAS_URL = "https://script.google.com/macros/s/AKfycbyloFrzmFrx_kwsIFXHfpb8OmSIFeXAcdcKnsLu0XYmK_vcuQ6gP0NKMyD-k0vBk2U/exec"; 
 
     function toggleDate(d) {
