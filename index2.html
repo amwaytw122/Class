@@ -239,10 +239,11 @@ function copyReminderText() {
     else if(d.includes('3/21')) dateText = "3/21(六)19:00";
 
     // 使用 \n 來達成真正的強迫換行
-    const textToCopy = `我已報名完成！\n${dateText}
-\n請記得儘速linepay繳費
+    // 在「我已報名完成」前面加上 ${currentPayload.name}
+    const textToCopy = `${currentPayload.name} 我已報名完成！${dateText}
+請記得儘速linepay繳費
 會議當天18:45即可開放入場等候審核。
-若等候超過5分鐘都沒有被准入，請退出zoom，再次確認您ZOOM的登入姓名，是否有與報名表單相同。\n
+若等候超過5分鐘都沒有被准入，請退出zoom，再次確認您ZOOM的登入姓名，是否有與報名表單相同。
 
 💎直播間Zoom ID：688 688 1985（密碼 688）`;
 
