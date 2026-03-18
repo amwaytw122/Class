@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3/20、3/21線上直播報名</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        /* 修改所有輸入框的預設文字顏色 */
+        ::placeholder { color: #ccc; opacity: 1; }
+        ::-webkit-input-placeholder { color: #ccc; }
+        ::-moz-placeholder { color: #ccc; }
+        :-ms-input-placeholder { color: #ccc; }
+
+        select:invalid, select option[value=""] { color: #ccc; }
+        select:invalid { color: #ccc !important; }
+        select option { color: #000; }
+        select:valid { color: #000; }
+        
+        :root { --border: #000; --accent: #ff4757; --bg: #f0f0f0; }
+        
+        body { 
+            font-family: 'Noto Sans TC', sans-serif; 
+            background: var(--bg); 
+            display: flex; 
+            justify-content: center; 
+            padding: 15px; 
+            margin: 0; 
+            transition: 0.4s;
+            /* 移除可能的外框或陰影 */
+            box-shadow: none;
+        }
+        
+        .app-container {
+            max-width: 500px;
+            width: 100%;
+        }
+
+        /* 動態配色 */
+        body.theme-320 { background: #2c3e50; --accent: #f1c40f; }
+        body.theme-321 { background: #e8f5e9; --accent: #2ecc71; }
+        body.theme-both { background: #fff0f3; --accent: #e91e63; }
+
+        h1 { font-size: 1.5rem; text-align: center; border-bottom: 6px solid #000; padding-bottom: 15px; font-weight: 900; margin-top: 0; }
+
+        /* EDM 樣式 */
+        .edm-box { position: relative; border: 5px solid #000; border-radius: 20px; overflow: visible; margin-bottom: 50px; cursor: pointer; transition: 0.2s; background: #eee; box-shadow: none; }
+        .edm-box img { width: 100%; display: block; border-radius: 15px; }
+        .edm-box.selected { border-color: var(--accent); transform: translateY(5px); }
+        .overlay { position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.8); display:none; flex-direction: column; justify-content:center; align-items:center; color:#fff; border-radius: 15px; }
+        .edm-box.selected .overlay { display: flex; }
+        .check-mark { font-size: 100px; color: #2ecc71; font-weight: 900; }
+        .zoom-btn { position: absolute; bottom: -45px; right: 5px; background: #fff; border: 3px solid #000; border-radius: 12px; padding: 8px; font-weight: bold; z-index: 10; }
+
+        /* 表單風格 */
+        .field { margin-bottom: 20px; }
+        label { display: block; font-weight: 900; margin-bottom: 8px; font-size: 1.1rem; }
+        input, select { width: 100%; padding: 15px; border: 4px solid #000; border-radius: 15px; font-size: 1.1rem; font-weight: bold; box-sizing: border-box; background: #fff; -webkit-appearance: none; }
+        
+        .price-display { background: none; color: #000; text-align: center; padding: 10px; border-radius: 20px; font-size: 2.2rem; font-weight: 900; margin: 10px 0; border: none; }
+
+        .submit-btn { width: 100%; padding: 25px; background: #ff4757; color: #fff; border: 5px solid #000; border-radius: 20px; font-size: 1.6rem; font-weight: 900; box-shadow: 0 10px 0 #000; cursor: pointer; }
+        .submit-btn:active { transform: translateY(10px); box-shadow: none; }
+        .submit-btn:disabled { background: #999; cursor: not-allowed; }
+
+        /* Modal 成功視窗 */
+        #modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:100; padding:15px; box-sizing:border-box; overflow-y:auto; }
+        .m-card { background:#fff; border:6px solid #000; border-radius:30px; padding:25px; max-width:420px; margin:60px auto auto auto; position:relative; }
+        .m-title { color:red; text-align:center; font-size:28px; font-weight:900; margin-bottom:20px; }
+
+        /* 分享按鈕樣式 */
+        .share-btn { 
+            width: 100%; 
+            padding: 20px; 
+            background: #00c300; /* Line Green */
+            color: #fff; 
+            border: 4px solid #000; 
+            border-radius: 15px; 
+            font-size: 1.3rem; 
+            font-weight: 900; 
+            cursor: pointer; 
+            margin-top: 20px;
+            text-align: center;
+            box-shadow: 0 6px 0 #000;
+        }
+        .share-btn:active { transform: translateY(4px); box-shadow: none; }
+    </style>
+</head>
+<body class="theme-default">
+
+<div class="app-container animate__animated animate__fadeIn">
+    <h1 style="font-size: 2.3rem;">3/20(五) 3/21(六)<br>線上直播報名</h1>
+
+    <!-- 3/20 EDM -->
+    <div id="card320" class="edm-box" onclick="toggleDate('3/20')">
+        <img src="https://drive.google.com/thumbnail?id=1CxuetIaIJ25Ic1gYDMTXTiIDoTZdfLZH&sz=w800">
+        <div class="zoom-btn" onclick="event.stopPropagation(); window.open('https://drive.google.com/file/d/1CxuetIaIJ25Ic1gYDMTXTiIDoTZdfLZH/view')">放大海報🔍</div>
+        <div class="overlay"><div class="check-mark">✓</div><div style="font-size:70px; font-weight:900;">100元</div></div>
+    </div>
+
+    <!-- 3/21 EDM -->
+    <div id="card321" class="edm-box" onclick="toggleDate('3/21')">
+        <img src="https://drive.google.com/thumbnail?id=1ZSb9QdbeekYHjmfRy9wgpKofO3d2RTi0&sz=w800">
+        <div class="zoom-btn" onclick="event.stopPropagation(); window.open('https://drive.google.com/file/d/1ZSb9QdbeekYHjmfRy9wgpKofO3d2RTi0/view')">放大海報🔍</div>
+        <div class="overlay"><div class="check-mark">✓</div><div style="font-size:70px; font-weight:900;">100元</div></div>
+    </div>
+
+    <form id="regForm">
+        <div class="field"><label>姓名</label><input type="text" name="name" placeholder="請用此姓名登入zoom直播間"></div>
+        <div class="field"><label>性別</label><select name="gender" required><option value="">請點選</option><option>男</option><option>女</option></select></div>
+        <div class="field"><label>介紹人</label><input type="text" name="referrer" placeholder="按此輸入"></div>
+        <div class="field"><label>Email</label><input type="email" name="email" placeholder="若有填寫,報名成功系統會發信通知"></div>
+        
+        <div class="field"><label>居住縣市</label>
+            <select name="city" required>
+                <option value="">請點選</option><option>北北基</option><option>桃竹苗</option><option>中彰投</option>
+                <option>雲嘉南</option><option>高屏</option><option>宜花東離島</option><option>海外</option>
+            </select>
+        </div>
+
+        <div class="field"><label>年齡區間</label>
+            <select name="age" required>
+                <option value="">請點選</option><option>2001-2010</option><option>1991-2000</option><option>1981-1990</option>
+                <option>1971-1980</option><option>1961-1970</option><option>1960以前</option>
+            </select>
+        </div>
+
+        <div class="field"><label>身分別</label>
+            <select name="identity" required>
+                <option value="">請點選</option><option>上班族</option><option>老闆</option><option>自由業</option><option>家庭主婦</option><option>退休人士</option><option>其它</option>
+            </select>
+        </div>
+
+        <div class="field"><label>繳費方式</label>
+            <select name="payMethod" required id="payMethod" onchange="document.getElementById('proxyWrap').style.display=(this.value.includes('他人')?'block':'none')">
+                <option value="">請點選</option><option>由我本人Linepay繳費</option><option>請他人代繳</option>
+            </select>
+        </div>
+        
+        <div style="color: #f39c12; font-size: 1rem; font-weight: 900; background: #fffbe6; border: none; padding: 12px; border-radius: 12px; margin-top: -10px; margin-bottom: 20px; line-height: 1.6;">
+            👤 收費窗口：杜俊傑<br>
+            🆔 LineID：geoffry0306 <br>
+            📞 電話搜尋：0912234429
+        </div>
+
+        <div id="proxyWrap" class="field" style="display:none">
+            <label style="color: orange;">代繳人姓名</label>
+            <input type="text" name="payProxyName" style="color: orange; border-color: orange;">
+        </div>
+
+        <div class="price-display" id="priceDisplay" style="color: #ff4757;">請先點選<br>報名的課程海報</div>
+
+        <button type="button" class="submit-btn" id="sBtn" onclick="sendToGAS()">送出報名+取得直播連結</button>
+    </form>
+</div>
+
+<!-- 成功視窗 -->
+<div id="modal">
+    <div class="m-card animate__animated animate__zoomIn">
+        <div style="text-align:right; font-size:30px; cursor:pointer; font-weight: bold;" onclick="location.reload()">✕</div>
+        <p class="m-title">🎉 報名完成 🎉</p>
+        
+        <div style="text-align:center; font-size:1.6rem; font-weight:900; background:#fffbe6; border:4px solid #000; padding:20px; border-radius:20px; margin-bottom:20px; color:#000; line-height: 1.5;">
+            💎直播間Zoom ID號碼：<br>
+            <span style="font-size: 2.2rem; color: #e91e63;">688 688 1985</span><br>
+            （密碼 688）
+        </div>
+
+        <div style="background:#ffeb3b; border:3px solid #000; padding:10px; text-align:center; font-weight:bold; color:red; margin:15px 0; border-radius: 10px;">請截圖此畫面備份</div>
+        
+        <button class="share-btn" onclick="shareToMobile()">按此分享<br><span style="font-size: 0.9rem;">(建議Line給自己或存備忘)</span></button>
+
+        <div style="text-align: center; margin-top: 15px; color: #666; font-size: 0.8rem;">點擊上方按鈕可快速轉傳至 Line</div>
+    </div>
+</div>
+
+<script>
+    let selected = [];
+    // 您的 Google Apps Script 部署網址
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbyloFrzmFrx_kwsIFXHfpb8OmSIFeXAcdcKnsLu0XYmK_vcuQ6gP0NKMyD-k0vBk2U/exec"; 
+
+    function toggleDate(d) {
+        if(selected.includes(d)) selected = selected.filter(x=>x!==d); else selected.push(d);
+        document.getElementById('card320').classList.toggle('selected', selected.includes('3/20'));
+        document.getElementById('card321').classList.toggle('selected', selected.includes('3/21'));
+        
+        if(selected.length === 0) {
+            document.getElementById('priceDisplay').innerText = "請先點選\n報名的課程海報";
+        } else {
+            document.getElementById('priceDisplay').innerText = "應繳金額 " + (selected.length * 100) + " 元";
+        }
+        
+        const b = document.body; b.className = '';
+        if(selected.length==2) b.classList.add('theme-both');
+        else if(selected.includes('3/20')) b.classList.add('theme-320');
+        else if(selected.includes('3/21')) b.classList.add('theme-321');
+        else b.classList.add('theme-default');
+    }
+
+    async function sendToGAS() {
+        if(selected.length===0) return alert('請先點選海報選擇課程！');
+        const f = document.getElementById('regForm');
+        if(!f.name.value) return alert('姓名為必填欄位（登入Zoom直播間的名稱）');
+
+        const btn = document.getElementById('sBtn');
+        btn.disabled = true; btn.innerText = "傳送中...請勿關閉";
+
+        const payload = {
+            name: f.name.value, gender: f.gender.value, referrer: f.referrer.value,
+            email: f.email.value, city: f.city.value, age: f.age.value,
+            identity: f.identity.value, payMethod: f.payMethod.value,
+            payProxyName: f.payProxyName.value, dates: selected.join(','), amount: selected.length*100
+        };
+
+        try {
+            await fetch(GAS_URL, {
+                method: "POST",
+                mode: "no-cors",
+                body: JSON.stringify(payload)
+            });
+            showSuccess();
+        } catch (err) {
+            alert('發送失敗：' + err);
+            btn.disabled = false; btn.innerText = "重新送出";
+        }
+    }
+
+    function showSuccess() {
+        document.getElementById('modal').style.display = 'block';
+        window.scrollTo(0,0);
+    }
+
+    function shareToMobile() {
+        const shareData = {
+            title: '直播報名資訊',
+            text: '🎉 我已報名成功！\n💎直播間Zoom ID：688 688 1985（密碼688）',
+            url: window.location.href
+        };
+
+        if (navigator.share) {
+            navigator.share(shareData).catch((err) => console.log('分享取消'));
+        } else {
+            // 備案：若不支援分享 API (如電腦版)，則複製文字
+            const dummy = document.createElement("textarea");
+            document.body.appendChild(dummy);
+            dummy.value = shareData.text;
+            dummy.select();
+            document.execCommand("copy");
+            document.body.removeChild(dummy);
+            alert("您的裝置不支援自動分享，已為您複製直播資訊，請直接貼上至 Line。");
+        }
+    }
+</script>
+</body>
+</html>
