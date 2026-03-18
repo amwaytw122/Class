@@ -5,357 +5,139 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <style>
-        :root {
-            --primary: #4A90E2;
-            --bg: #f9f9f9;
-            --border: #000000;
-        }
-        body {
-            font-family: "Microsoft JhengHei", "Heiti TC", sans-serif;
-            background-color: var(--bg);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            margin: 0; padding: 10px;
-            display: flex; justify-content: center;
-        }
-        /* 主題顏色變換 */
-        body.theme-320 { background-color: #2d3436; color: #fdcb6e; --border: #fdcb6e; }
-        body.theme-321 { background-color: #e8f5e9; color: #2d3436; --border: #2ecc71; }
-        body.theme-both { background-color: #fff0f3; color: #d63031; --border: #ff7675; }
-
-        .container {
-            max-width: 480px; width: 100%;
-            background: #ffffff; border: 6px solid #000;
-            border-radius: 24px; padding: 20px;
-            box-shadow: 12px 12px 0px #000;
-            color: #000; box-sizing: border-box;
-        }
-        .theme-320 .container { background: #1e272e; color: #fdcb6e; box-shadow: 12px 12px 0px #fdcb6e; border-color: #fdcb6e;}
-        .theme-321 .container { background: #ffffff; color: #1b5e20; box-shadow: 12px 12px 0px #2ecc71; border-color: #2ecc71;}
-        .theme-both .container { background: #ffffff; color: #c0392b; box-shadow: 12px 12px 0px #ff7675; border-color: #ff7675;}
-
-        h1 { text-align: center; font-size: 1.6rem; margin: 10px 0 20px 0; line-height: 1.4; border-bottom: 5px solid var(--border); padding-bottom: 10px; font-weight: 900; }
+        :root { --p: #000; --bg: #f0f0f0; }
+        body { font-family: sans-serif; background: var(--bg); padding: 10px; display: flex; justify-content: center; }
+        .container { max-width: 450px; width: 100%; background: #fff; border: 5px solid #000; border-radius: 20px; padding: 20px; box-shadow: 10px 10px 0 #000; box-sizing: border-box; }
         
-        /* EDM 樣式優化 */
-        .edm-container { display: flex; flex-direction: column; gap: 20px; margin-bottom: 25px; }
-        .edm-card {
-            position: relative; border: 5px solid #000;
-            border-radius: 18px; overflow: hidden; cursor: pointer;
-            transition: all 0.2s; background: #eee; min-height: 200px;
-        }
-        .edm-card.selected { transform: translateY(5px); box-shadow: none; border-color: #ff4757; }
-        .edm-card img { width: 100%; height: auto; display: block; }
+        /* 圖片區 */
+        .edm-card { position: relative; border: 4px solid #000; border-radius: 15px; overflow: hidden; margin-bottom: 15px; cursor: pointer; transition: 0.2s; background: #ddd; }
+        .edm-card img { width: 100%; display: block; min-height: 150px; }
+        .edm-card.selected { border-color: #ff4757; transform: scale(0.98); }
+        .overlay { position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5); display:none; color:#fff; font-size:60px; justify-content:center; align-items:center; font-weight:bold; pointer-events:none; }
+        .edm-card.selected .overlay { display: flex; }
+        .zoom { position: absolute; bottom: 10px; right: 10px; background: #fff; border: 2px solid #000; padding: 5px 10px; border-radius: 10px; z-index: 5; }
+
+        /* 表單 */
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: 900; margin-bottom: 5px; }
+        input, select { width: 100%; padding: 12px; border: 3px solid #000; border-radius: 10px; box-sizing: border-box; font-size: 16px; font-weight: bold; }
         
-        .check-overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6); display: none;
-            flex-direction: column; justify-content: center; align-items: center;
-            color: #fff; pointer-events: none;
-        }
-        .edm-card.selected .check-overlay { display: flex; }
-        .big-check { font-size: 80px; font-weight: bold; color: #2ecc71; filter: drop-shadow(0 0 10px #000); }
-        .price-tag { font-size: 24px; background: #ff4757; padding: 5px 15px; border-radius: 10px; margin-top: 5px; }
-
-        .zoom-btn {
-            position: absolute; bottom: 15px; right: 15px;
-            background: #fff; border: 3px solid #000; border-radius: 12px;
-            width: 50px; height: 50px; display: flex; justify-content: center; align-items: center;
-            font-size: 24px; z-index: 5; pointer-events: auto;
-        }
-
-        /* 輸入框與選擇框特別設計 */
-        .form-group { margin-bottom: 18px; }
-        label { display: block; font-weight: 900; margin-bottom: 8px; font-size: 1.2rem; }
-        input[type="text"], input[type="email"], select {
-            width: 100%; padding: 15px; border: 4px solid #000;
-            border-radius: 12px; font-size: 1.1rem; box-sizing: border-box;
-            background: #fff; font-weight: bold;
-        }
+        .amt-box { background: #ffeb3b; border: 4px solid #000; padding: 15px; text-align: center; font-size: 24px; font-weight: 900; margin: 15px 0; border-radius: 10px; }
         
-        /* 自動金額按鈕 */
-        .amt-box {
-            background: #000; color: #fff; padding: 25px; border-radius: 15px;
-            text-align: center; font-size: 2rem; font-weight: 900;
-            margin: 20px 0; border: 4px solid var(--border);
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
+        .btn-submit { width: 100%; padding: 20px; background: #ff4757; color: #fff; border: 4px solid #000; border-radius: 15px; font-size: 20px; font-weight: 900; box-shadow: 0 6px 0 #000; cursor: pointer; }
+        .btn-submit:active { transform: translateY(4px); box-shadow: 0 2px 0 #000; }
 
-        .submit-btn {
-            width: 100%; padding: 22px; background: #ff4757; color: white;
-            border: 5px solid #000; border-radius: 15px; font-size: 1.5rem;
-            font-weight: 900; cursor: pointer; margin-top: 10px;
-            box-shadow: 0 8px 0 #000; transition: all 0.1s;
-        }
-        .submit-btn:active { transform: translateY(8px); box-shadow: none; }
-        .submit-btn:disabled { background: #95a5a6; cursor: not-allowed; }
-
-        /* Modal 彈窗 */
-        #modal {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95); z-index: 100; overflow-y: auto; padding: 15px; box-sizing: border-box;
-        }
-        .modal-content {
-            background: #fff; color: #000; padding: 25px; border-radius: 25px;
-            max-width: 420px; margin: 10px auto; position: relative; border: 6px solid #000;
-        }
-        .close-modal { position: absolute; top: 5px; right: 15px; font-size: 40px; cursor: pointer; font-weight: bold; }
-        .remind-box { background: #ffeb3b; border: 4px solid #000; padding: 12px; margin: 15px 0; text-align: center; font-weight: 900; color: #d63031; font-size: 1.2rem; }
-        .qr-code { width: 160px; height: 160px; margin: 10px auto; display: block; border: 3px solid #000; }
-        .info-row { margin: 8px 0; font-size: 1.1rem; border-bottom: 1px dashed #ccc; padding-bottom: 5px; }
+        /* 彈窗 */
+        #modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:99; padding:20px; box-sizing:border-box; overflow-y:auto; }
+        .m-content { background:#fff; padding:20px; border:5px solid #000; border-radius:20px; max-width:400px; margin:auto; position:relative; }
+        
+        /* 配色 */
+        body.t320 { background: #2c3e50; } body.t320 .container { border-color: #f1c40f; box-shadow: 10px 10px 0 #f1c40f; }
+        body.t321 { background: #d5f5e3; } body.t321 .container { border-color: #27ae60; box-shadow: 10px 10px 0 #27ae60; }
+        body.tBoth { background: #fce4ec; } body.tBoth .container { border-color: #e91e63; box-shadow: 10px 10px 0 #e91e63; }
     </style>
 </head>
-<body class="theme-default">
+<body>
 
-<div class="container animate__animated animate__backInDown">
-    <h1>寰宇新竹「線上直播」<br>報名網頁</h1>
+<div class="container animate__animated animate__fadeInUp">
+    <h2 style="text-align:center; border-bottom:4px solid #000; padding-bottom:10px;">寰宇新竹「線上直播」報名</h2>
 
-    <div class="edm-container">
-        <!-- 3/20 -->
-        <div class="edm-card" id="card320" onclick="toggleSelection('3/20')">
-            <!-- 使用 google drive 直接預覽連結 -->
-            <img src="https://drive.google.com/thumbnail?id=1CxuetIaIJ25Ic1gYDMTXTiIDoTZdfLZH&sz=w800" alt="3/20 EDM">
-            <div class="zoom-btn" onclick="zoomImg(event, '1CxuetIaIJ25Ic1gYDMTXTiIDoTZdfLZH')">🔍</div>
-            <div class="check-overlay">
-                <div class="big-check">✓</div>
-                <div class="price-tag">$100</div>
-            </div>
-        </div>
-        <!-- 3/21 -->
-        <div class="edm-card" id="card321" onclick="toggleSelection('3/21')">
-            <img src="https://drive.google.com/thumbnail?id=1ZSb9QdbeekYHjmfRy9wgpKofO3d2RTi0&sz=w800" alt="3/21 EDM">
-            <div class="zoom-btn" onclick="zoomImg(event, '1ZSb9QdbeekYHjmfRy9wgpKofO3d2RTi0')">🔍</div>
-            <div class="check-overlay">
-                <div class="big-check">✓</div>
-                <div class="price-tag">$100</div>
-            </div>
-        </div>
+    <div id="card320" class="edm-card" onclick="sel('3/20')">
+        <img src="https://drive.google.com/thumbnail?id=1CxuetIaIJ25Ic1gYDMTXTiIDoTZdfLZH&sz=w800">
+        <div class="zoom" onclick="event.stopPropagation(); window.open('https://drive.google.com/file/d/1CxuetIaIJ25Ic1gYDMTXTiIDoTZdfLZH/view')">放大</div>
+        <div class="overlay">✓</div>
     </div>
 
-    <form id="regForm">
-        <div class="form-group">
-            <label>姓名</label>
-            <input type="text" id="name" name="name" placeholder="請輸入姓名">
-        </div>
-        <div class="form-group">
-            <label>性別</label>
-            <select name="gender">
-                <option value="未提供">請選擇</option>
-                <option value="男">男</option>
-                <option value="女">女</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label>介紹人</label>
-            <input type="text" name="referrer">
-        </div>
-        <div class="form-group">
-            <label>Email (必填，將發送通知信)</label>
-            <input type="email" id="email" name="email" required placeholder="example@mail.com">
-        </div>
-        <div class="form-group">
-            <label>居住縣市</label>
-            <select name="city">
-                <option value="北北基">北北基</option>
-                <option value="桃竹苗" selected>桃竹苗</option>
-                <option value="中彰投">中彰投</option>
-                <option value="雲嘉南">雲嘉南</option>
-                <option value="高屏">高屏</option>
-                <option value="宜花東離島">宜花東離島</option>
-                <option value="海外">海外</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label>年齡範圍</label>
-            <select name="age">
-                <option value="2001-2010">2001-2010</option>
-                <option value="1991-2000">1991-2000</option>
-                <option value="1981-1990">1981-1990</option>
-                <option value="1971-1980">1971-1980</option>
-                <option value="1961-1970">1961-1970</option>
-                <option value="1960以前">1960以前</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label>身份別</label>
-            <select name="identity">
-                <option value="上班族">上班族</option>
-                <option value="老闆">老闆</option>
-                <option value="自由業">自由業</option>
-                <option value="家庭主婦">家庭主婦</option>
-                <option value="退休人士">退休人士</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label>繳費方式</label>
-            <select name="payMethod" id="payMethod" onchange="toggleProxy()">
-                <option value="本人Linepay繳費給窗口">本人Linepay繳費給窗口</option>
-                <option value="請他人代繳">請他人代繳</option>
-            </select>
-        </div>
-        <div class="form-group" id="proxyDiv" style="display:none">
-            <label>代繳人姓名</label>
-            <input type="text" name="payProxyName" id="payProxyName">
-        </div>
+    <div id="card321" class="edm-card" onclick="sel('3/21')">
+        <img src="https://drive.google.com/thumbnail?id=1ZSb9QdbeekYHjmfRy9wgpKofO3d2RTi0&sz=w800">
+        <div class="zoom" onclick="event.stopPropagation(); window.open('https://drive.google.com/file/d/1ZSb9QdbeekYHjmfRy9wgpKofO3d2RTi0/view')">放大</div>
+        <div class="overlay">✓</div>
+    </div>
 
-        <label>自動計算金額</label>
-        <div class="amt-box" id="amtDisplay">請選擇課程</div>
+    <form id="f">
+        <div class="form-group"><label>姓名</label><input type="text" name="name" required></div>
+        <div class="form-group"><label>Email</label><input type="email" name="email" required></div>
+        <div class="form-group"><label>性別</label><select name="gender"><option>男</option><option>女</option></select></div>
+        <div class="form-group"><label>居住縣市</label><select name="city"><option>桃竹苗</option><option>北北基</option><option>中彰投</option><option>雲嘉南</option><option>高屏</option><option>宜花東</option><option>海外</option></select></div>
+        <div class="form-group"><label>介紹人</label><input type="text" name="referrer"></div>
+        <div class="form-group"><label>繳費方式</label>
+            <select name="payMethod" onchange="document.getElementById('pBox').style.display=(this.value.includes('他人')?'block':'none')">
+                <option>本人Linepay繳費給窗口</option><option>請他人代繳</option>
+            </select>
+        </div>
+        <div id="pBox" class="form-group" style="display:none"><label>代繳人姓名</label><input type="text" name="payProxyName"></div>
         
-        <input type="hidden" name="amount" id="finalAmount" value="0">
-        <input type="hidden" name="dates" id="selectedDatesInput" value="">
-
-        <button type="button" class="submit-btn" id="submitBtn" onclick="submitForm()">送出報名+email通知我</button>
+        <div class="amt-box" id="aDisp">金額：0 元</div>
+        
+        <button type="button" class="btn-submit" id="sBtn" onclick="send()">送出報名+email通知我</button>
     </form>
 </div>
 
-<!-- 成功彈窗 -->
 <div id="modal">
-    <div class="modal-content animate__animated animate__zoomIn">
-        <span class="close-modal" onclick="closeModal()">×</span>
-        <h2 id="modalTitle" style="text-align:center; margin:0;">報名完成</h2>
-        <p id="modalTime" style="text-align:center; font-size:0.9rem; color:#666;"></p>
-        
-        <div class="remind-box">特別醒目提醒：請截圖此畫面備份</div>
-        
-        <div id="summary"></div>
-        <hr style="border: 2px dashed #000;">
-        <div id="lineInfo"></div>
-        
-        <div style="font-size: 0.85rem; line-height: 1.4; background:#f0f0f0; padding:10px; border-radius:10px;">
-            1. 直播連結會上傳到此Line群<br>
-            2. 請用上述報名的名字申請加入Line群<br>
-            3. 完成繳費後才會審核您入群<br>
-            <b>收費窗口：杜俊傑</b><br>
-            LineID: geoffry0306 / 電話: 0912234429
-        </div>
+    <div class="m-content animate__animated animate__zoomIn">
+        <h3 style="text-align:center; color:red;">✅ 報名完成</h3>
+        <p id="mTime" style="text-align:center; font-size:12px;"></p>
+        <div style="background:#ffeb3b; padding:10px; border:2px solid #000; text-align:center; font-weight:bold; margin-bottom:10px;">⚠️ 請截圖此畫面備份</div>
+        <div id="res"></div>
+        <hr>
+        <div id="qr"></div>
+        <p style="font-size:12px; color:#666;">窗口：杜俊傑 (Line: geoffry0306)</p>
+        <button onclick="location.reload()" style="width:100%; padding:10px;">關閉</button>
     </div>
 </div>
 
 <script>
-    let selectedDates = [];
-
-    function toggleSelection(date) {
-        const card = date === '3/20' ? document.getElementById('card320') : document.getElementById('card321');
+    let sDate = [];
+    function sel(d) {
+        if(sDate.includes(d)) sDate = sDate.filter(x=>x!==d); else sDate.push(d);
+        document.getElementById('card320').classList.toggle('selected', sDate.includes('3/20'));
+        document.getElementById('card321').classList.toggle('selected', sDate.includes('3/21'));
+        let amt = sDate.length * 100;
+        document.getElementById('aDisp').innerText = "金額：" + amt + " 元";
         
-        if (selectedDates.includes(date)) {
-            selectedDates = selectedDates.filter(d => d !== date);
-            card.classList.remove('selected');
-        } else {
-            selectedDates.push(date);
-            card.classList.add('selected');
-        }
-        
-        document.getElementById('selectedDatesInput').value = selectedDates.join(',');
-        
-        // 自動更新金額
-        const amt = selectedDates.length * 100;
-        document.getElementById('finalAmount').value = amt;
-        document.getElementById('amtDisplay').innerText = amt > 0 ? amt + " 元" : "請選擇課程";
-        
-        updateTheme();
+        document.body.className = '';
+        if(sDate.length==2) document.body.classList.add('tBoth');
+        else if(sDate.includes('3/20')) document.body.classList.add('t320');
+        else if(sDate.includes('3/21')) document.body.classList.add('t321');
     }
 
-    function updateTheme() {
-        const b = document.body;
-        b.className = '';
-        if (selectedDates.length === 2) b.classList.add('theme-both');
-        else if (selectedDates.includes('3/20')) b.classList.add('theme-320');
-        else if (selectedDates.includes('3/21')) b.classList.add('theme-321');
-        else b.classList.add('theme-default');
-    }
+    function send() {
+        if(sDate.length==0) return alert('請先點選海報選擇日期');
+        const f = document.getElementById('f');
+        if(!f.name.value || !f.email.value) return alert('請填寫姓名與 Email');
 
-    function zoomImg(e, id) {
-        e.stopPropagation(); // 防止觸發選取
-        window.open('https://drive.google.com/file/d/'+id+'/view', '_blank');
-    }
+        const btn = document.getElementById('sBtn');
+        btn.disabled = true; btn.innerText = "傳送中...";
 
-    function toggleProxy() {
-        document.getElementById('proxyDiv').style.display = 
-            document.getElementById('payMethod').value === '請他人代繳' ? 'block' : 'none';
-    }
-
-    function submitForm() {
-        if (selectedDates.length === 0) {
-            alert('❌ 請先點擊上方海報，選擇要報名的課程！');
-            return;
-        }
-        
-        const email = document.getElementById('email').value;
-        const name = document.getElementById('name').value;
-        if (!email || !name) {
-            alert('❌ 請填寫姓名與 Email 以便發送通知！');
-            return;
-        }
-
-        const btn = document.getElementById('submitBtn');
-        btn.innerText = "🚀 傳送資料中...";
-        btn.disabled = true;
-
-        const form = document.getElementById('regForm');
-        const formData = {
-            name: name,
-            gender: form.gender.value,
-            referrer: form.referrer.value,
-            email: email,
-            city: form.city.value,
-            age: form.age.value,
-            identity: form.identity.value,
-            payMethod: form.payMethod.value,
-            payProxyName: document.getElementById('payProxyName').value,
-            amount: document.getElementById('finalAmount').value,
-            dates: document.getElementById('selectedDatesInput').value
+        const data = {
+            name: f.name.value, email: f.email.value, gender: f.gender.value,
+            city: f.city.value, referrer: f.referrer.value, payMethod: f.payMethod.value,
+            payProxyName: f.payProxyName.value, dates: sDate.join(','), amount: sDate.length*100,
+            age: "未填", identity: "未填"
         };
 
-        // 呼叫 GAS 後端
-        google.script.run
-            .withSuccessHandler(function(res) {
-                showModal(formData, res.time);
-                btn.innerText = "送出報名+email通知我";
-                btn.disabled = false;
-            })
-            .withFailureHandler(function(err) {
-                alert("錯誤: " + err);
-                btn.disabled = false;
-                btn.innerText = "重新送出";
-            })
-            .processForm(formData);
+        google.script.run.withSuccessHandler(res => {
+            if(res.status === "error") {
+                alert("伺服器錯誤: " + res.message);
+                btn.disabled = false; btn.innerText = "重試";
+            } else {
+                showM(data, res.time);
+            }
+        }).withFailureHandler(err => {
+            alert("網路發送失敗: " + err);
+            btn.disabled = false; btn.innerText = "重試";
+        }).processForm(data);
     }
 
-    function showModal(data, time) {
-        document.getElementById('modalTime').innerText = time;
-        let lineHtml = "";
-        let summaryHtml = `
-            <div class="info-row"><b>姓名：</b>${data.name}</div>
-            <div class="info-row"><b>Email：</b>${data.email}</div>
-            <div class="info-row"><b>應繳金額：</b><span style="color:red; font-size:1.3rem;">${data.amount}元</span></div>
-            <div class="info-row"><b>報名日期：</b>${data.dates}</div>
-        `;
-
-        if (data.dates.includes('3/20')) {
-            lineHtml += `
-                <div style="text-align:center; margin:15px 0; border:2px solid #fdcb6e; padding:10px; border-radius:15px;">
-                    <p style="margin:0; font-weight:bold;">3/20 專屬 Line 群</p>
-                    <a href="https://wbl.pse.is/LIVE20260320" style="color:blue; text-decoration:underline;">點此加入群組</a>
-                    <img class="qr-code" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://wbl.pse.is/LIVE20260320">
-                </div>`;
-        }
-        if (data.dates.includes('3/21')) {
-            lineHtml += `
-                <div style="text-align:center; margin:15px 0; border:2px solid #2ecc71; padding:10px; border-radius:15px;">
-                    <p style="margin:0; font-weight:bold;">3/21 專屬 Line 群</p>
-                    <a href="https://wbl.pse.is/LIVE20260321" style="color:blue; text-decoration:underline;">點此加入群組</a>
-                    <img class="qr-code" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://wbl.pse.is/LIVE20260321">
-                </div>`;
-        }
-
-        document.getElementById('summary').innerHTML = summaryHtml;
-        document.getElementById('lineInfo').innerHTML = lineHtml;
+    function showM(d, t) {
+        document.getElementById('mTime').innerText = t;
+        document.getElementById('res').innerHTML = `<b>姓名：</b>${d.name}<br><b>金額：</b>${d.amount}元<br><b>日期：</b>${d.dates}`;
+        let q = "";
+        if(d.dates.includes('3/20')) q += `<p>3/20 群組：<br><img src="https://api.qrserver.com/v1/create-qr-code/?data=https://wbl.pse.is/LIVE20260320" style="width:100px;"></p>`;
+        if(d.dates.includes('3/21')) q += `<p>3/21 群組：<br><img src="https://api.qrserver.com/v1/create-qr-code/?data=https://wbl.pse.is/LIVE20260321" style="width:100px;"></p>`;
+        document.getElementById('qr').innerHTML = q;
         document.getElementById('modal').style.display = 'block';
     }
-
-    function closeModal() {
-        document.getElementById('modal').style.display = 'none';
-    }
 </script>
-
 </body>
 </html>
