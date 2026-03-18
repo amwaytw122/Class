@@ -141,7 +141,7 @@
     async function sendToGAS() {
         if(selected.length===0) return alert('請先點選海報選擇課程！');
         const f = document.getElementById('regForm');
-        if(!f.name.value || !f.email.value) return alert('姓名與 Email 必填！');
+if(!f.name.value) return alert('姓名為必填欄位！');
 
         const btn = document.getElementById('sBtn');
         btn.disabled = true; btn.innerText = "傳送中...請勿關閉";
