@@ -6,6 +6,16 @@
     <title>3/20、3/21線上直播報名</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <style>
+.footer-credit {
+    text-align: center;
+    font-size: 10px;      /* 極小字體 */
+    color: #ccc;         /* 淺灰色 */
+    margin-top: 50px;    /* 與上方表單拉開距離 */
+    padding-bottom: 20px;
+    opacity: 0.5;        /* 半透明，更低調 */
+    letter-spacing: 1px;
+}
+        
         .edm-group {
     display: flex;
     gap: 10px;          /* 左右海報的間距 */
@@ -177,6 +187,10 @@
 
         <button type="button" class="submit-btn" id="sBtn" onclick="sendToGAS()">送出報名+取得ZOOM直播號碼</button>
     </form>
+    
+        <div class="footer-credit">程式設計 杜杜龍</div>
+    </div> <!-- app-container 的結束 -->
+    
 </div>
 
 <!-- 成功視窗 -->
