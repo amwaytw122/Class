@@ -301,29 +301,30 @@
         else if(d.includes('3/21')) dateText = "3/21(六)19:00";
 
         const textToCopy = `${currentPayload.name} 您已報名完成！${dateText}
-請記得儘速linepay繳費
 
-💎直播間Zoom ID：688 688 1985（密碼 688）
+💎Zoom直播間ID：688 688 1985（密碼 688）
 
 💎登入名稱：${currentPayload.name}
 
-會議當天18:45即可開放入場等候審核。
+⚠️注意
+（1）請記得Linepay繳費
+（2）18:45開放入場等候審核
+（3）若等超過5分鐘無法進入，請退出zoom檢查登入姓名是否正確。
 
-若等候超過5分鐘都沒有被准入，請退出zoom，並確認您ZOOM的登入姓名，要修改為「${currentPayload.name}」您才會順利被審核準入。
 ---------
 ZOOM新手教學
+老手可跳過
 ---------
-📲第一步：下載軟體
-手機平板：安裝app「ZOOM」
+📲第一步：下載安裝app「ZOOM」
 
 📲第二步：進入直播間
-1.打開ZOOM，點「加入會議」（免註冊也可用）
-2.會議號碼：輸入 688 688 1985
-3.您的名稱：輸入 ${currentPayload.name}
-4.點「加入」，輸入密碼 688
+1.打開ZOOM▶加入會議（免註冊也可用）
+2.會議號碼▶688 688 1985
+3.您的名稱▶${currentPayload.name}
+4.點「加入」▶輸入密碼688
 
 📲第三步：開啟聲音
-管理員審核通過進入會議室後，點「透過裝置音訊撥號」或「使用Wi-Fi或行動數據」，才能聽到老師的聲音喔！`;
+管理員審核通過▶進入會議室▶點「透過裝置音訊撥號」或「使用Wi-Fi或行動數據」才能聽到聲音`;
         
         const dummy = document.createElement("textarea");
         document.body.appendChild(dummy);
