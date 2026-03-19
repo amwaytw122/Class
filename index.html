@@ -171,22 +171,28 @@
             </select>
         </div>
 
-        <div class="field"><label>繳費方式</label>
-            <select name="payMethod" required id="payMethod" onchange="document.getElementById('proxyWrap').style.display=(this.value.includes('代繳')?'flex':'none')">
-                <option value="">請點選</option><option>我本人Linepay繳費</option><option>我請別人幫我代繳</option>
-            </select>
-        </div>
-        
-        <div style="color: #f39c12; font-size: 1rem; font-weight: 900; background: #fffbe6; border: none; padding: 12px; border-radius: 12px; margin-top: -10px; margin-bottom: 20px; line-height: 1.6;">
-            👤 收費窗口：杜俊傑<br>
-            🆔 LineID：geoffry0306 <br>
-            📞 Line電話搜尋：0912234429
-        </div>
+<!-- 1. 繳費方式欄位 -->
+<div class="field">
+    <label>繳費方式</label>
+    <select name="payMethod" required id="payMethod" onchange="document.getElementById('proxyWrap').style.display=(this.value.includes('代繳')?'flex':'none')">
+        <option value="">請點選</option>
+        <option>由我本人Linepay繳費</option>
+        <option>我請別人幫我代繳</option>
+    </select>
+</div>
 
-        <div id="proxyWrap" class="field" style="display:none">
-            <label style="color: orange;">代繳人姓名</label>
-            <input type="text" name="payProxyName" style="color: orange; border-color: orange;">
-        </div>
+<!-- 2. 代繳人姓名 (原本在下面，請移到這裡) -->
+<div id="proxyWrap" class="field" style="display:none">
+    <label style="color: orange;">代繳人姓名</label>
+    <input type="text" name="payProxyName" style="color: orange; border-color: orange;" placeholder="請輸入姓名">
+</div>
+
+<!-- 3. 收費窗口資訊 (原本在中間，請移到這兩個欄位之後) -->
+<div style="color: #f39c12; font-size: 1rem; font-weight: 900; background: #fffbe6; border: none; padding: 12px; border-radius: 12px; margin-top: -10px; margin-bottom: 20px; line-height: 1.6;">
+    👤 收費窗口：杜俊傑<br>
+    🆔 LineID：geoffry0306 <br>
+    📞 Line電話搜尋：0912234429
+</div>
 
         <div class="price-display" id="priceDisplay"></div>
 
