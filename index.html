@@ -85,7 +85,9 @@
     margin-bottom: 0;        /* 移除原本下方的間距 */
     text-align: right;       /* 文字靠右對齊，視覺更整齊 */
     padding-right: 12px;     /* 與輸入框的間距 */
-    white-space: nowrap;     /* 防止標題換行 */
+    white-space: normal;     /* 防止標題換行 */
+    line-height: 1.2; 
+
 }
 
 .field input, .field select { 
@@ -144,8 +146,10 @@
         <div class="field"><label>姓名</label><input type="text" name="name" placeholder="用此姓名登入zoom直播"></div>
         <div class="field"><label>性別</label><select name="gender" required><option value="">請點選</option><option>男</option><option>女</option></select></div>
         <div class="field"><label>介紹人</label><input type="text" name="referrer" placeholder="按此輸入"></div>
-        <div class="field"><label>Email</label><input type="email" name="email" placeholder="若有填，直播前會mail提醒"></div>
-        
+<div class="field">
+    <label>Email<br><span style="font-size: 0.8rem; font-weight: normal;">(非必填)</span></label>
+    <input type="email" name="email" placeholder="直播前3小時會mail提醒">
+</div>        
         <div class="field"><label>居住縣市</label>
             <select name="city" required>
                 <option value="">請點選</option><option>北北基</option><option>桃竹苗</option><option>中彰投</option>
