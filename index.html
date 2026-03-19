@@ -186,7 +186,7 @@
         <p class="m-title">🎉 報名完成 🎉</p>
         <p id="mTime" class="m-time"></p>
         
-        <div class="m-yellow-box">請截圖此畫面備份</div>
+        <div class="m-yellow-box">請截圖備份此畫面</div>
         
         <div id="summary"></div>
         
@@ -194,11 +194,11 @@
         
         <div class="m-zoom-box">
             💎直播間Zoom ID<br>
-            <span style="font-size:1.8rem;">688 688 1985</span><br>
-            （密碼 688）
+            <span style="font-size:1.8rem;">688 688 1985<br>
+            （密碼 688）</span>
         </div>
 
-        <button type="button" class="copy-btn" onclick="copyReminderText()">複製以上提醒文字</button>
+        <button type="button" class="copy-btn" onclick="copyReminderText()">點我複製文字>Line給自己</button>
     </div>
 </div>
 
@@ -227,7 +227,7 @@
     async function sendToGAS() {
         if(selected.length===0) return alert('請先點選海報選擇課程！');
         const f = document.getElementById('regForm');
-        if(!f.name.value) return alert('姓名為必填欄位（登入Zoom直播間的名稱）');
+        if(!f.name.value) return alert('姓名必填（與登入Zoom直播間名稱相同）');
 
         const btn = document.getElementById('sBtn');
         btn.disabled = true; btn.innerText = "傳送中...請勿關閉";
